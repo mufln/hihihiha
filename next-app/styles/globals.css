@@ -81,7 +81,7 @@
 .Header {
   background-color: black;
   height: 25%;
-  margin-bottom: 24px;
+  /*margin-bottom: 1px;*/
   position: relative;
 }
 

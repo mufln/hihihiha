@@ -46,9 +46,9 @@ export default function RootLayout({
               <Link key='0' href='/' className='container'>
                   <img src="/kokocgroup_logo_horizontal_black_background.jpg" alt="logo" width={300} height={100}/>
               </Link>
-              <div className='flex lg:w-3/5 w-full m-auto'>
+              <div className='flex w-full m-auto '>
                 {items.map((item) => (
-                    <Link className='lg:text-lg md:text-sm text-xs lg:px-3 lg:py-1 p-1 md:p-2 md:py-1 m-auto border-solid-2 border hover:bg-white hover:text-black ease-in duration-100 border-white rounded-lg' key={item.id} href={item.rout}>{item.title}</Link>
+                    <Link className='lg:text-2xl md:text-xl text-sm w-full lg:py-3 md:py-2 py-1  hover:bg-white hover:text-black ease-in-out duration-200 text-center font-bold' key={item.id} href={item.rout}>{item.title}</Link>
                   ))}
               </div>
           </div>
