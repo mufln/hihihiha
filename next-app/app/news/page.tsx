@@ -17,7 +17,7 @@ export default function CardWithBackground() {
     <div  className=' bg-white p-10 w-full'>
     <NewsTitle/>
 
-    <div className="grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] gap-1 my-10">
+    <div className="flex flex-wrap gap-4 my-10">
         {items.map((item) => (
             <Card key={item.id} className="w-max overflow-hidden bg-black p-8 rounded-lg">
                 <div className="relative h-[200px]">
