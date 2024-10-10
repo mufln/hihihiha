@@ -17,30 +17,30 @@ export default function CardWithBackground() {
     <div  className=' bg-white lg:p-10 md:px-4 px-4 py-2 w-full'>
     <NewsTitle/>
 
-    <div className="flex flex-wrap gap-4 my-10">
+    <div className="flex flex-wrap gap-4 my-10 mx-auto md:mx-10">
         {items.map((item) => (
-            <Card key={item.id} className="w-max overflow-hidden bg-black lg:p-6 p-4 rounded-md lg:max-w-96 max-w-80">
+            <Card key={item.id} className="shadow-md w-max overflow-hidden bg-white rounded-md 2xl:w-1/5 xl:w-2/5 lg:w-2/5 md:w-2/5 w-full">
                 <div className="">
                 <img
                     src={item.image}
                     alt={item.title}
-                    className="inset-0  max-h-80 lg:max-h-96  object-cover rounded"
+                    className="shadow-sm  max-h-80 lg:max-h-96 w-full object-cover rounded-md"
                 />
                 {/*<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/0 " />*/}
                 <CardHeader className="relative">
 
                 </CardHeader>
                 </div>
-                <CardTitle className="lg:text-lg text-sm my-2 mx-auto font-bold text-white  truncate">
+                <CardTitle className="lg:text-2xl md:text-xl mx-2 text-sm my-2 font-bold text-black truncate">
                     {item.title}
                 </CardTitle>
-                <CardContent className="my-2 max-w-52">
-                <p className="text-grey text-sm">
+                <CardContent className="my-2 mx-2 max-w-52">
+                <p className="text-black lg:text-lg text-sm">
                     {item.info}
                 </p>
                 </CardContent>
                 <CardFooter>
-                <Button className="w-full text-white">Подробнее</Button>
+                <Button className="w-full text-black lg:text-lg md:text-md text-sm">Подробнее</Button>
                 </CardFooter>
             </Card>))}
     </div>
