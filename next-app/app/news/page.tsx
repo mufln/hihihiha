@@ -19,7 +19,7 @@ export default function CardWithBackground() {
 
     <div className="flex flex-wrap gap-4 my-10 mx-auto md:mx-10">
         {items.map((item) => (
-            <Card key={item.id} className="shadow-md w-max overflow-hidden bg-white rounded-md 2xl:w-1/5 xl:w-2/5 lg:w-2/5 md:w-2/5 w-full">
+            <Card key={item.id} className="shadow-md w-max overflow-hidden bg-white rounded-md xl:w-1/4 lg:w-2/5 md:w-2/5 w-full lg:my-10 md:my-4 my-2">
                 <div className="">
                 <img
                     src={item.image}
@@ -31,7 +31,7 @@ export default function CardWithBackground() {
 
                 </CardHeader>
                 </div>
-                <CardTitle className="lg:text-2xl md:text-xl mx-2 text-sm my-2 font-bold text-black truncate">
+                <CardTitle className="xl:text-2xl lg:text-lg md:text-md mx-2 text-sm my-2 font-bold text-black truncate">
                     {item.title}
                 </CardTitle>
                 <CardContent className="my-2 mx-2 max-w-52">

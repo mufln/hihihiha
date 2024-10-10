@@ -43,8 +43,8 @@ function Body() {
 
             <div className=" my-10 flex-wrap flex mx-auto ">
                 {previewData.map((item, index) => (
-                    <div className='preview lg:w-96 w-80' key={index} style={{backgroundImage: item.backgrounndImage}}>
-                        <div className='h-full lg:text-lg text-md bg-gradient-to-t from-black from-10% to-40% truncate hover:opacity-100 rounded-lg py-4 duration-300 opacity-100 lg:opacity-0 text-center '>
+                    <div className='preview duration-300 lg:w-96 w-80' key={index} style={{backgroundImage: item.backgrounndImage}}>
+                        <div className='h-full hover:pt-0 lg:text-lg text-md bg-gradient-to-t from-black from-10% to-40% truncate hover:opacity-100 rounded-lg py-4 duration-300 opacity-100 lg:opacity-0 text-center '>
                             <h2 className="lg:mt-96 mt-80">{item.title}</h2>
                             <p className="">{item.desc}</p>
                         </div>
