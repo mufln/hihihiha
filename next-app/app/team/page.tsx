@@ -1,4 +1,3 @@
-import './tbody.css';
 import React from 'react';
 import TeamTitle from '@/components/titles/team';
 
@@ -34,25 +33,48 @@ function Body() {
       desc: 'Нападающий',
       backgrounndImage: 'url(https://avatars.mds.yandex.net/get-shedevrum/5570741/img_b5b38b9886fd11efb424c6eb7d220bbe/orig)'
     }
-    
+
   ]
 
   return (
-    <div  className='Body bg-white p-10 w-full'>
-    <TeamTitle/>
+      <div className='Body bg-white p-10 w-full'>
+        <TeamTitle/>
 
-    <div className="containerNews my-10">
-    {previewData.map((item, index) => (
-          <div className='preview' key={index} style={{backgroundImage: item.backgrounndImage}}>
-            <div className='previewText'>
-              <h2>{item.title}</h2>
-              <p>{item.desc}</p>
-            </div>
+        <div className="containerNews my-10">
+          {previewData.map((item, index) => (
+              <div className='preview' key={index} style={{backgroundImage: item.backgrounndImage}}>
+                <div className='previewText'>
+                  <h2>{item.title}</h2>
+                  <p>{item.desc}</p>
+                </div>
+              </div>
+          ))}
+        </div>
+        <div className="bg-white flex justify-start">
+        </div>
+
+        <!-- Preview -->
+        <div className="bg-black bg-cover w-80 aspect-[3/4] rounded-[30px] m-1">
+          <div
+              className="opacity-0 flex flex-col justify-center items-center relative top-[70%] rounded-[30px] rounded-tl-none rounded-tr-none w-full h-[30%] bg-black bg-opacity-50 text-white transition ease-in-out duration-500">
+            <h2 className="text-[2vw] font-bold text-center"></h2>
+            <p className="text-[1vw] text-center w-[90%] hyphens-auto"></p>
           </div>
-        ))}
-    </div>
-    </div>
+        </div>
+
+        <!-- Preview Hover -->
+        <div className="hover:cursor-pointer hover:opacity-100">
+          <div
+              className="opacity-0 flex flex-col justify-center items-center relative top-[70%] rounded-[30px] rounded-tl-none rounded-tr-none w-full h-[30%] bg-black bg-opacity-50 text-white transition ease-in-out duration-500">
+          </div>
+        </div>
+
+        <!-- Container News -->
+        <div className="flex flex-wrap w-full gap-4">
+        </div>
+
+        <!-- Heading -->
+        <h1 className="text-[48px] font-bold text-left"></h1>
+      </div>
   )
 }
-
-export default Body;
