@@ -1,6 +1,7 @@
 import './tbody.css';
 import React from 'react';
 import TeamTitle from '@/components/titles/team';
+import Link from 'next/link';
 
 function Body() {
   const previewData = [
@@ -41,7 +42,7 @@ function Body() {
     <div  className='Body bg-white p-10 w-full'>
     <TeamTitle/>
 
-    <div className="containerNews my-10">
+    <Link href="/player" className="containerNews my-10">
     {previewData.map((item, index) => (
           <div className='preview' key={index} style={{backgroundImage: item.backgrounndImage}}>
             <div className='previewText'>
@@ -50,7 +51,7 @@ function Body() {
             </div>
           </div>
         ))}
-    </div>
+    </Link>
     </div>
   )
 }
