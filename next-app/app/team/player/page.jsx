@@ -1,5 +1,5 @@
 import Active from "@/components/titles/active-player"
-import  '../../styles/tbody.css'
+import  '../../../styles/tbody.css'
 import {
   Table,
   TableBody,
@@ -23,7 +23,7 @@ const items = [
   { id: 5, title: "КК", value: 1 },
 ]
 
-export default function Component() {
+export default function Player() {
   const tableData = Array.from({ length: 7 }, (_, rowIndex) =>
     Array.from({ length: 7 }, (_, colIndex) => `${rowIndex + 1}-${colIndex + 1}`)
   )

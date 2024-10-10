@@ -1,9 +1,14 @@
+'use client'
+ 
+import { useRouter } from 'next/navigation'
+ 
 import React from 'react';
 import TeamTitle from '@/components/titles/team';
 import '../../styles/tbody.css';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function Component() {
+  const router = useRouter();
   const previewData = [
     {
       title: 'Иван Иванов',
@@ -44,14 +49,14 @@ export default function Component() {
 
         <div className="containerNews bg-white flex flex-wrap my-10">
           {previewData.map((item, index) => (
-            <Link href="/player"  key={index}>
+            <Button onClick={() => router.push('/team/player')}  key={index}>
               <div className='preview' style={{backgroundImage: item.backgrounndImage}}>
                 <div className='previewText'>
                   <h2>{item.title}</h2>
                   <p>{item.desc}</p>
                 </div>
               </div>
-            </Link>
+            </Button>
           ))}
         
         </div>
