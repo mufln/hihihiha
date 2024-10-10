@@ -77,3 +77,81 @@
 ::-webkit-scrollbar {
   width: 0;
 }
+
+.Header {
+  background-color: black;
+  height: 25%;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.container {
+    display: flex;
+    justify-content: start;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* .logo {
+    border-color: red;
+    border-style: solid;
+    border-width: 9px;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    margin-right: 2%;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-weight: bold;
+} */
+
+.menu
+{
+    display: flex;
+    color: white;
+    .button
+    {
+        border: solid #E02A26 2px;
+        border-radius: 30px;
+        padding: 4px 10px;
+        margin: 0 12px;
+        font-size: 1em;
+        white-space: nowrap;
+    }
+    .button:hover{
+        background-color: #26E065;
+        border-color: #26E065;
+        color: black;
+    }
+    .button:active{
+        background-color: #E02A26;
+        border-color: #E02A26;
+    }
+}
+
+@font-face {
+    font-family: 'MuseoSans';
+    src: url('../fonts/Museo/MuseoSansCyrl-500.ttf');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'MuseoSans100';
+    src: url('../fonts/Museo/MuseoSansCyrl-100.ttf');
+    font-weight: 100;
+    font-style: normal;
+  }
+
+*{
+    font-family: 'MuseoSans', sans-serif;
+}
+
+footer p{
+  font-family: 'MuseoSans100', sans-serif;
+}

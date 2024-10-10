@@ -56,7 +56,7 @@ export default function Home() {
     }
   }
   return (
-      <main className=" flex-grow">
+      <main>
         {/* <img src="/image.png" className="min-w-full"/> */}
         <div className="min-w-full">
       <div>

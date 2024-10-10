@@ -1,7 +1,8 @@
 import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { it } from 'node:test'
+import NewsTitle from '@/components/titles/news'
+// import { it } from 'node:test'
 
 const items = [
     { id: 1, title: "Изображение 1", image: "/image.png", info: "Это удивительное место, которое стоит посетить. Насладитесь прекрасными видами и незабываемыми впечатлениями." },
@@ -13,9 +14,12 @@ const items = [
 
 export default function CardWithBackground() {
   return (
-    <div className="grid grid-cols-4 gap-4 bg-white p-10">
+    <div  className=' bg-white p-10 w-full'>
+    <NewsTitle/>
+
+    <div className="grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] gap-1 my-10">
         {items.map((item) => (
-            <Card className="w-full overflow-hidden bg-black p-8 rounded-lg">
+            <Card key={item.id} className="w-max overflow-hidden bg-black p-8 rounded-lg">
                 <div className="relative h-[200px]">
                 <img
                     src={item.image}
@@ -29,8 +33,8 @@ export default function CardWithBackground() {
                     </CardTitle>
                 </CardHeader>
                 </div>
-                <CardContent className="pt-4">
-                <p className="text-muted-foreground">
+                <CardContent className="py-4 max-w-52">
+                <p className="text-muted-foreground text-sm">
                     {item.info}
                 </p>
                 </CardContent>
@@ -38,6 +42,7 @@ export default function CardWithBackground() {
                 <Button className="w-full text-white">Подробнее</Button>
                 </CardFooter>
             </Card>))}
+    </div>
     </div>
   )
 }
