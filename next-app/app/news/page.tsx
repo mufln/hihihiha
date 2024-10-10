@@ -19,7 +19,7 @@ export default function CardWithBackground() {
 
     <div className="flex flex-wrap justify-start gap-4 my-10">
         {items.map((item) => (
-            <Card key={item.id} className="w-max overflow-hidden bg-black p-8 rounded-lg">
+            <Card key={item.id} className="w-max overflow-hidden bg-black p-8 rounded-3xl">
                 <div className="relative h-[200px]">
                 <img
                     src={item.image}

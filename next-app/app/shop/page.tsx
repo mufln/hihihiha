@@ -1,10 +1,14 @@
+'use client'
+ 
+import { useRouter } from 'next/navigation'
+
 import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import Link from 'next/link'
 import ShopTitle from '@/components/titles/shop'
 
 import Image from "next/image"
-import { StarIcon } from "lucide-react"
+import { Badge, StarIcon } from "lucide-react"
 // import { it } from 'node:test'
 
 const items = [
@@ -16,6 +20,7 @@ const items = [
   ]
 
 export default function CardWithBackground() {
+  const router = useRouter();
   return (
     <div  className=' bg-white p-10 w-full '>
       <div className='flex flex-wrap justify-between space-y-4'>
@@ -25,7 +30,7 @@ export default function CardWithBackground() {
     
     <div className="flex flex-wrap gap-4 justify-start my-10">
         {items.map((item) => (
-            <Card key={item.id} className="w-full max-w-sm bg-black p-8 rounded-lg">
+          <Card key={item.id} onClick={() => router.push('/shop/product')} className="w-full max-w-sm bg-black p-8 rounded-3xl">
             <CardHeader className="relative p-0">
               <Image
                 src={`${item.image}`}
@@ -43,7 +48,7 @@ export default function CardWithBackground() {
               </div>
             </CardContent>
             <CardFooter className="p-4">
-              <Link href="/shop/product" className="w-full bg-[#E02A26] p-4 rounded-lg text-xl">Купить</Link>
+              <button onClick={() => router.push('/shop/product')} className="w-full bg-[#E02A26] p-4 rounded-xl text-xl text-center">Купить</button>
             </CardFooter>
           </Card>))}
     </div>
