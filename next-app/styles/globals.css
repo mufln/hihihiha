@@ -110,29 +110,29 @@
     font-weight: bold;
 } */
 
-.menu
-{
-    display: flex;
-    color: white;
-    .button
-    {
-        border: solid #E02A26 2px;
-        border-radius: 30px;
-        padding: 4px 10px;
-        margin: 0 12px;
-        font-size: 1em;
-        white-space: nowrap;
-    }
-    .button:hover{
-        background-color: #26E065;
-        border-color: #26E065;
-        color: black;
-    }
-    .button:active{
-        background-color: #E02A26;
-        border-color: #E02A26;
-    }
-}
+/*.menu*/
+/*{*/
+/*    display: flex;*/
+/*    color: white;*/
+/*    .button*/
+/*    {*/
+/*        border: solid #E02A26 2px;*/
+/*        border-radius: 30px;*/
+/*        padding: 4px 10px;*/
+/*        margin: 0 12px;*/
+/*        font-size: 1em;*/
+/*        white-space: nowrap;*/
+/*    }*/
+/*    .button:hover{*/
+/*        background-color: #26E065;*/
+/*        border-color: #26E065;*/
+/*        color: black;*/
+/*    }*/
+/*    .button:active{*/
+/*        background-color: #E02A26;*/
+/*        border-color: #E02A26;*/
+/*    }*/
+/*}*/
 
 @font-face {
     font-family: 'MuseoSans';
