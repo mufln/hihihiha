@@ -20,19 +20,19 @@ function Body() {
       backgrounndImage: 'url(https://img.freepik.com/free-photo/soccer-player-with-ball-standing-knee-play-football_176420-16453.jpg?t=st=1728555008~exp=1728558608~hmac=3a86375a2a0f0c2465597de0479b3f3db7a5a1708f3165251af28adfab658896&w=900)'
     },
     {
-      title: 'Александр Александров',
+      title: 'Б. Ю. Александров',
       desc: 'Нападающий',
       backgrounndImage: 'url(https://img.freepik.com/free-photo/soccer-player-with-ball-standing-knee-play-football_176420-16453.jpg?t=st=1728555008~exp=1728558608~hmac=3a86375a2a0f0c2465597de0479b3f3db7a5a1708f3165251af28adfab658896&w=900)'
     },
     {
-      title: 'Александр Александров',
+      title: 'Чипи Чапов',
       desc: 'Нападающий',
-      backgrounndImage: 'url(https://img.freepik.com/free-photo/soccer-player-with-ball-standing-knee-play-football_176420-16453.jpg?t=st=1728555008~exp=1728558608~hmac=3a86375a2a0f0c2465597de0479b3f3db7a5a1708f3165251af28adfab658896&w=900)'
+      backgrounndImage: 'url(https://avatars.mds.yandex.net/get-shedevrum/5570741/img_491b62a286fd11efb8d3f67acb6a4d8d/orig)'
     },
     {
-      title: 'Александр Александров',
+      title: 'Дуби Дубинин',
       desc: 'Нападающий',
-      backgrounndImage: 'url(https://img.freepik.com/free-photo/soccer-player-with-ball-standing-knee-play-football_176420-16453.jpg?t=st=1728555008~exp=1728558608~hmac=3a86375a2a0f0c2465597de0479b3f3db7a5a1708f3165251af28adfab658896&w=900)'
+      backgrounndImage: 'url(https://avatars.mds.yandex.net/get-shedevrum/5570741/img_b5b38b9886fd11efb424c6eb7d220bbe/orig)'
     }
     
   ]

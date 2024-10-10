@@ -6,7 +6,7 @@
   .preview
   {
     background-color: black;
-    background-size: 100%;
+    background-size: cover;
     width: 20rem;
     aspect-ratio: 3/4;
     border-radius: 30px;
