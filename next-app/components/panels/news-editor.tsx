@@ -60,8 +60,8 @@ export default function ArticleEditor() {
   }
 
   return (
-    <div className=" bg-white p-10 w-full flex flex-wrap text-black">
-      <Card className="w-full max-w-96 mx-auto">
+    <div className="w-full bg-white p-10 flex flex-wrap gap-10 text-black">
+      <Card className="max-w-96 mb-8">
         <CardHeader>
           <h1 className="text-4xl mb-4">Markdown Редактор</h1>
         </CardHeader>
@@ -124,7 +124,8 @@ export default function ArticleEditor() {
         </CardFooter>
       </Card>
 
-      <Tabs defaultValue="preview" className="w-full max-w-96 mx-auto mt-8">
+      <Tabs defaultValue="preview" className="w-full max-w-96">
+        <h1 className="text-gray-500 text-4xl">Предпросмотр</h1>
         <TabsContent value="preview">
           <Card>
             <CardContent className="p-4">
