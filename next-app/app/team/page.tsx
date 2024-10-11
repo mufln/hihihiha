@@ -49,14 +49,12 @@ export default function Component() {
 
         <div className="containerNews bg-white flex flex-wrap my-10">
           {previewData.map((item, index) => (
-            <Button onClick={() => router.push('/team/player')}  key={index}>
-              <div className='preview' style={{backgroundImage: item.backgrounndImage}}>
+              <div className='preview' onClick={() => router.push('/team/player')}  key={index} style={{backgroundImage: item.backgrounndImage}}>
                 <div className='previewText'>
                   <h2>{item.title}</h2>
                   <p>{item.desc}</p>
                 </div>
               </div>
-            </Button>
           ))}
         
         </div>

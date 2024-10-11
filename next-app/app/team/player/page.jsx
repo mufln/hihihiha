@@ -42,7 +42,7 @@ export default function Player() {
           </div>
           <div className=" flex mt-4 bg-black text-white rounded-2xl p-2 max-w-max">
           {items.map((item, index) => (
-            <div className='col m-2' key={index}>
+            <div className='col m-1' key={index}>
               <div className="text-base text-center m-2">
                   {item.title}
               </div>

@@ -41,18 +41,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={museoSans.variable}>
       <body className={`bg-black text-white ${museoSans.className} overflow-x-hidden`}>
-        <div className="flex flex-col min-h-screen">
-          <div className="Header">
+          <header className="bg-black pb-4 min-h-max sticky top-0 left-0 w-full z-10">
               <Link key='0' href='/' className='container'>
                   <img src="/kokocgroup_logo_horizontal_black_background.jpg" alt="logo" width={300} height={100}/>
               </Link>
-              <div className='menu'>
+              <div className='menu flex flex-wrap gap-y-2'>
                 {items.map((item) => (
                     <Link className='button' key={item.id} href={item.rout}>{item.title}</Link>
                   ))}
               </div>
-          </div>
-          <main className="flex-grow overflow-auto">
+          </header>
+          <main className="flex-grow">
               {children}
           </main>
           <footer className="grid grid-cols-2 p-4">
@@ -60,7 +59,6 @@ export default function RootLayout({
             <p className="text-sm m-2">{item}</p>
           ))]}
           </footer>
-        </div>
       </body>
     </html>
   );
