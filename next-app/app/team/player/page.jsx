@@ -31,7 +31,7 @@ export default function Player() {
     <div className="h-full bg-white flex flex-wrap text-black p-4">
       <div className="flex flex-col mb-8">
           <div className="flex flex-wrap space-x-4">
-            <div className='preview mb-4' key={items.id} style={{backgroundImage: backgroundImage}}></div>
+            <div className='preview mb-4' style={{backgroundImage: backgroundImage}}></div>
             <div className="flex-1">
               <div className="mb-4">
                   <h2 className="text-4xl">Иван Иванов</h2>

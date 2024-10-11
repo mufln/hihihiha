@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import ShopTitle from '@/components/titles/shop'
 
 import Image from "next/image"
@@ -23,21 +23,28 @@ export default function CardWithBackground() {
   const router = useRouter();
   return (
     <div  className=' bg-white p-10 w-full '>
-      <div className='flex flex-wrap justify-between space-y-4'>
+      <div className='flex flex-wrap justify-between content-center justify-between gap-4'>
         <ShopTitle/> 
-        <Link href="/shop/cart" className="w-full bg-black p-4 rounded-3xl text-xl max-w-max mr-16">Корзина</Link>
+        <Button onClick={() => router.push('/shop/cart')} className="w-full bg-black p-4 rounded-3xl text-xl max-w-max mr-16">Корзина</Button>
       </div>
     
     <div className="flex flex-wrap gap-4 justify-start my-10">
         {items.map((item) => (
-          <Card key={item.id} onClick={() => router.push('/shop/product')} className="w-full max-w-sm bg-black p-8 rounded-3xl">
+          <Card key={item.id} onClick={() => router.push('/shop/product')} className="bg-black p-8 rounded-3xl"
+          style={{
+            width: '20rem',
+            aspectRatio: '3/4',
+            borderRadius: '30px',
+            marginBottom: '1rem',
+            backgroundPosition: 'center center',
+          }}>
             <CardHeader className="relative p-0">
               <Image
                 src={`${item.image}`}
                 alt="Product image"
                 width={300}
-                height={200}
-                className="w-full h-48 object-cover rounded-lg"
+                height={400}
+                className="object-cover rounded-lg"
               />
             </CardHeader>
             <CardContent className="p-4">
@@ -48,7 +55,7 @@ export default function CardWithBackground() {
               </div>
             </CardContent>
             <CardFooter className="p-4">
-              <button onClick={() => router.push('/shop/product')} className="w-full bg-[#E02A26] p-4 rounded-xl text-xl text-center">Купить</button>
+              <button onClick={() => router.push('/shop/product')} className="w-full bg-[#E02A26] p-4 rounded-3xl text-xl text-center">Подробнее</button>
             </CardFooter>
           </Card>))}
     </div>
