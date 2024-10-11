@@ -1,7 +1,9 @@
+'use client'
 import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import NewsTitle from '@/components/titles/news'
+import { useRouter } from 'next/navigation'
 // import { it } from 'node:test'
 
 const items = [
@@ -13,13 +15,14 @@ const items = [
   ]
 
 export default function CardWithBackground() {
+  const router = useRouter();
   return (
     <div  className=' bg-white p-10 w-full'>
     <NewsTitle/>
 
     <div className="flex flex-wrap justify-start gap-4 my-10">
         {items.map((item) => (
-            <Card key={item.id} className="w-max overflow-hidden bg-black p-8 rounded-3xl">
+            <Card key={item.id} onClick={() => router.push('/news/newspage')} className="w-max overflow-hidden bg-black p-8 rounded-3xl">
                 <div className="relative h-[200px]">
                 <img
                     src={item.image}

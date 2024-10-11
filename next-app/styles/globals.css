@@ -128,9 +128,16 @@
 }
 
 @font-face {
-    font-family: 'MuseoSans';
+    font-family: 'MuseoSansH2';
     src: url('../fonts/Museo/MuseoSansCyrl-500.ttf');
     font-weight: 300;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'MuseoSansH1';
+    src: url('../fonts/Museo/MuseoSansCyrl-700.ttf');
+    font-weight: 700;
     font-style: normal;
   }
 
@@ -141,10 +148,23 @@
     font-style: normal;
   }
 
-*{
-    font-family: 'MuseoSans', sans-serif;
+* {
+    font-family: 'MuseoSans100', sans-serif;
 }
 
-footer p{
-  font-family: 'MuseoSans100', sans-serif;
+h1{
+  font-family: 'MuseoSansH1', sans-serif;
+}
+
+h2{
+  font-family: 'MuseoSansH2', sans-serif;
+}
+
+p, blockquote, ul{
+  margin-bottom: 2rem;
+}
+
+ul{
+  margin-left: 2rem;
+  list-style-type: disc;
 }

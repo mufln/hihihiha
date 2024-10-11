@@ -72,7 +72,7 @@ export default function ShoppingCart() {
         <div className="text-lg font-semibold">{total.toFixed(2)}р</div>
       </CardFooter>
       <CardFooter>
-        <Button className="text-white w-full bg-[#E02A26] p-4 rounded-3xl text-nowrap max-w-max mr-16">Оформить заказ</Button>
+        <Button className="text-white w-full bg-[#E02A26] p-4 rounded-3xl text-nowrap max-w-max">Оформить заказ</Button>
       </CardFooter>
       </Card>
     </div>
