@@ -10,6 +10,11 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Bold, Italic, Underline, List, Image as ImageIcon } from "lucide-react"
 
+function auto_grow(element: HTMLTextAreaElement) {
+  element.style.height = "5px";
+  element.style.height = (element.scrollHeight)+"px";
+}
+
 export default function ArticleEditor() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
@@ -108,6 +113,7 @@ export default function ArticleEditor() {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     onSelect={(e) => handleSelection(e.target as HTMLTextAreaElement)}
+                    onInput={(e) => auto_grow(e.target as HTMLTextAreaElement)}
                     className="border-gray-200 border-2 p-2"
                     placeholder="Пишите здесь..."
                     rows={10}
@@ -130,7 +136,7 @@ export default function ArticleEditor() {
           <Card>
             <CardContent className="p-4">
               <h1 className="text-3xl mb-4">{title}</h1>
-              <ReactMarkdown className="break-all whitespace-normal">{content}</ReactMarkdown>
+              <ReactMarkdown className="break-all whitespace-normal">{content.replace(/\n/g, "  \n")}</ReactMarkdown>
             </CardContent>
           </Card>
         </TabsContent>
