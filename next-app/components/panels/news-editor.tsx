@@ -19,39 +19,41 @@ export default function ArticleEditor() {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [selected, setSelected] = useState("")
+  const [startselected, setStartselected] = useState(0)
+  const [endselected, setEndselected] = useState(0)
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSelection = (target: EventTarget) => {
     const textarea = target as HTMLTextAreaElement;
     if (textarea) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const selectedText = textarea.value.substring(start, end);
+      setStartselected(textarea.selectionStart);
+      setEndselected(textarea.selectionEnd);
+      const selectedText = textarea.value.substring(startselected, endselected);
       // console.log(selectedText)
-      setSelected(selectedText);
+      // setSelected(selectedText);
     }
   }
 
   const handleBoldClick = () => {
-    setContent(content.replace(selected, "**" + selected + "**"))
+    setContent(content.substring(0, startselected) + "**" + content.substring(startselected, endselected) + "**" + content.substring(endselected))
     
   }
 
   const handleItalicClick = () => {
-    setContent(content.replace(selected, "*" + selected + "*"))
+    setContent(content.substring(0, startselected) + "*" + content.substring(startselected, endselected) + "*" + content.substring(endselected))
   }
 
   const handleUnderlineClick = () => {
-    setContent(content.replace(selected, "__" + selected + "__"))
+    setContent(content.substring(0, startselected) + "__" + content.substring(startselected, endselected) + "__" + content.substring(endselected))
   }
 
   const handleListClick = () => {
-    const lines = selected.split(/\n/g);
+    const lines = content.substring(startselected, endselected).split(/\n/g);
     let newsel = "";
     lines.forEach((line, index) => {
         newsel = newsel + " - " + line + "\n";
     });
-    setContent(content.replace(selected, newsel))
+    setContent(content.substring(0, startselected) + newsel + content.substring(endselected))
   }
 
   const handleImageClick = () => {
@@ -114,7 +116,7 @@ export default function ArticleEditor() {
                     onChange={(e) => setContent(e.target.value)}
                     onSelect={(e) => handleSelection(e.target as HTMLTextAreaElement)}
                     onInput={(e) => auto_grow(e.target as HTMLTextAreaElement)}
-                    className="border-gray-200 border-2 p-2"
+                    className="text-base text-black"
                     placeholder="Пишите здесь..."
                     rows={10}
                     ref={textareaRef}
