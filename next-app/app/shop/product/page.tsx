@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ShoppingCart, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import ShopTitleWhite from "@/components/titles/shop-white"
+import ShopTitle from "@/components/titles/shop"
 
 const item = {id: 1, title: "Носки ФК Кокос", price: '599 p', 
               info: `Носки ФК Кокос - это идеальный выбор для тех, кто ценит комфорт и стиль. 
@@ -34,10 +34,10 @@ export default function ProductPage() {
   const router = useRouter();
 
   return (
-    <div className="p-10 w-full">
+    <div className="p-10 w-full bg-white text-black">
       <div className='flex flex-wrap content-center justify-between gap-4'>
-        <ShopTitleWhite/> 
-        <Button onClick={() => router.push('/shop/cart')} className="w-full bg-[#E02A26] p-4 rounded-3xl text-xl max-w-max mr-16">Корзина</Button>
+        <ShopTitle/> 
+        <Button onClick={() => router.push('/shop/cart')} className="text-white w-full bg-black p-4 rounded-3xl text-xl max-w-max mr-16">Корзина</Button>
       </div>
       <div className="flex flex-wrap gap-10 my-10">
         {/* Product Image */}
@@ -74,7 +74,7 @@ export default function ProductPage() {
 
           {/* Add to Cart and Wishlist Buttons */}
           <div className="flex gap-4 mb-8 text-left">
-            <Button className="flex-1 flex bg-[#E02A26] p-4 rounded-3xl">
+            <Button className="flex-1 flex bg-[#E02A26] p-4 rounded-3xl text-white">
               <ShoppingCart className="w-4 h-4 mr-2" />
               Добавить в корзину
             </Button>
@@ -87,7 +87,7 @@ export default function ProductPage() {
                   variant="outline"
                   key={index} 
                   onClick={() => handleColorChange(index)}
-                  className={`p-0 w-12 h-12 bg-${c.col} rounded-3xl ${c.col === 'black' ? 'border-2 border-white' : ''}`}>
+                  className={`p-0 w-12 h-12 bg-${c.col} rounded-3xl ${c.col === 'white' ? 'border-2 border-black' : ''}`}>
                   {color === index ? 
                     <div className="w-full h-full bg-black bg-opacity-50 rounded-3xl flex justify-center items-center">
                       <Check size={32} color="#ffffff" />
