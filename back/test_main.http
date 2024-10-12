@@ -1,0 +1,77 @@
+POST http://127.0.0.1:8000/auth/register
+Content-Type: application/json
+
+{
+    "username": "johndoe",
+    "password": "123456",
+    "full_name": "John Doe",
+    "email": "johndoe@example.com"
+}
+
+###
+
+POST http://127.0.0.1:8000/auth/login
+Content-Type: application/x-www-form-urlencoded
+
+username=johndoe&password=123456
+
+###
+@token = 3JhfB76a5xSoxeQ9cCLPN7jRCy9tVZB2
+GET http://localhost:8000/users/me
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:8000/users
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:8000/users/johndoe
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:8000/posts
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:8000/posts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "title": "Test post",
+    "text_md": "Test post text",
+    "media": [1, 2, 3, 4, 5]
+}
+
+###
+POST http://127.0.0.1:8000/resources
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="test.png"
+Content-Type: image/png
+
+< /Users/aleksejzmeevyh/Downloads/test-images/5.webp
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+
+###
+GET http://localhost:8000/posts
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:8000/merch
+
+
+###
+POST http://localhost:8000/merch
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "Test Merch",
+    "description": "Test Merch description",
+    "price": 100,
+    "media": [1, 2, 3]
+}
+
