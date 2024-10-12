@@ -148,8 +148,39 @@
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'MuseoSans300Italic';
+    src: url('../fonts/Museo/MuseoSansCyrl-300Italic.ttf');
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'MuseoSans500Italic';
+    src: url('../fonts/Museo/MuseoSansCyrl-500Italic.ttf');
+    font-weight: 500;
+    font-style: italic;
+  }
+
+
 * {
     font-family: 'MuseoSans100', sans-serif;
+}
+
+.MuseoBold{
+  font-family: 'MuseoSansH2', sans-serif;
+}
+
+.MuseoBolder{
+  font-family: 'MuseoSansH1', sans-serif;
+}
+
+.MuseoBoldItalic{
+  font-family: 'MuseoSans300Italic', sans-serif;
+}
+
+.MuseoBolderItalic{
+  font-family: 'MuseoSans500Italic', sans-serif;
 }
 
 h1{
