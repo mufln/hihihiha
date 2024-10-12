@@ -3,6 +3,7 @@ import React from 'react'
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import NewsTitle from '@/components/titles/news'
+import { useRouter } from 'next/navigation'
 import {QueryClient, useQuery} from "@tanstack/react-query";
 // import { it } from 'node:test'
 
@@ -55,6 +56,10 @@ async function getNews() {
 }
 
 export default function CardWithBackground() {
+  const router = useRouter();
+  return (
+    <div  className=' bg-white p-10 w-full'>
+    <NewsTitle/>
     const {status, data} = useQuery({
         queryKey: ['news'],
         queryFn: getNews})

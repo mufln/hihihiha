@@ -2,7 +2,8 @@ import './tbody.css';
 import React from 'react';
 import TeamTitle from '@/components/titles/team';
 
-function Body() {
+export default function Component() {
+  const router = useRouter();
     const previewData = [
         {
             title: 'Иван Иванов',

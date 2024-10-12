@@ -2,3 +2,5 @@
 /gitignore
 .idea
 back/venv
+back/static
+.gitignore
