@@ -35,7 +35,7 @@ export default function Player() {
             <div className="flex-1">
               <div className="mb-4">
                   <h2 className="text-4xl">Иван Иванов</h2>
-                  <Active/>
+                  <p className="mt-1 text-xl text-[#26E065]">Текущий игрок ФК</p>
               </div>
               <p className="mt-1 text-xl">Нападающий</p>
             </div>
