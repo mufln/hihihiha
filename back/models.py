@@ -61,3 +61,24 @@ class Merch(DbModel):
     description: str
     price: int
     created_at: datetime
+
+class Player(DbModel):
+    __tablename__ = "players"
+    id: int
+    name: str
+    role: str
+    bio: str
+    joined_at: datetime
+    left_at: datetime | None = None
+
+class Stats(DbModel):
+    __tablename__ = "stats"
+    id: int
+    season_name: str
+    player_id: int
+    games: int
+    goals : int
+    passes : int
+    yellow_cards : int
+    red_cards : int
+    created_at: datetime

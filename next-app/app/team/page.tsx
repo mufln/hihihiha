@@ -1,10 +1,26 @@
+'use client'
 import "../../styles/tbody.css";
-import React from 'react';
+import React, {useState} from 'react';
 import TeamTitle from '@/components/titles/team';
 import {useRouter} from "next/navigation";
+import Link from "next/link";
+import {QueryClient, useQuery} from "@tanstack/react-query";
+
+
+const queryClient = new QueryClient();
+
+
+let getTeam = async () => {
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL+ '/team', {
+        method: "GET"
+    })
+    return response.json();
+}
+
+
 
 export default function Component() {
-    // const router = useRouter();
+    const router = useRouter();
     const previewData = [
         {
             title: 'Иван Иванов',
@@ -38,20 +54,33 @@ export default function Component() {
         }
 
     ]
-
+    const {data, status} = useQuery({
+        queryKey: ['team'],
+        queryFn: getTeam
+    })
+    console.log(data)
     return (
         <div className='Body bg-white lg:p-10 p-2 w-full'>
             <TeamTitle/>
-
             <div className=" my-10 flex-wrap flex mx-auto ">
-                {previewData.map((item, index) => (
-                    <div className='preview duration-300 lg:w-96 w-80' key={index} style={{backgroundImage: item.backgrounndImage}}>
-                        <div className='h-full hover:pt-0 lg:text-lg text-md bg-gradient-to-t from-black from-10% to-40% truncate hover:opacity-100 rounded-lg py-4 duration-300 opacity-100 lg:opacity-0 text-center '>
-                            <h2 className="lg:mt-96 mt-80">{item.title}</h2>
-                            <p className="">{item.desc}</p>
-                        </div>
+                {status === 'error' && <p>{status}</p>}
+                {status === 'loading' &&
+                    <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
+                {status === 'success' && (
+                data.map((item) => (
+                    <div className='preview duration-300 lg:w-96 w-80' key={item.id}
+                         onClick={() => {
+                            router.push("/team/player?id="+item.id)
+                         }}
+                         style={{backgroundImage: "url("+ process.env.NEXT_PUBLIC_API_URL + item.media[0].filename +")"}}>
+                            <div
+                                className='h-full hover:pt-0 lg:text-lg text-md bg-gradient-to-t from-black from-10% to-40% truncate hover:opacity-100 rounded-lg py-4 duration-300 opacity-100 lg:opacity-0 text-center '>
+                                <h2 className="lg:mt-96 mt-80">{item.name}</h2>
+                                <p className="">{item.role}</p>
+
+                            </div>
                     </div>
-                ))}
+                )))}
             </div>
         </div>
     )
