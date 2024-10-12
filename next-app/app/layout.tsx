@@ -30,10 +30,10 @@ import {ReactQueryClientProvider} from "@/components/ReactQueryClientProvider";
 const items = [
   { id: 1, title: "Новости", rout: "/news" },
   { id: 2, title: "Командa", rout: "/team" },
-  { id: 3, title: "Матчи", rout: "/image.png" },
+  { id: 3, title: "Матчи", rout: "/matches" },
   { id: 4, title: "Магазин", rout: "/shop" },
   { id: 5, title: "О Клубе", rout: "/about" },
-  { id: 6, title: "Профиль", rout: "/image.png" },
+  { id: 6, title: "Профиль", rout: "/profile" },
 ]
 
 export default function RootLayout({
