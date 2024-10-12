@@ -78,6 +78,13 @@
   width: 0;
 }
 
+.Header {
+  background-color: black;
+  height: 25%;
+  /*margin-bottom: 1px;*/
+  position: relative;
+}
+
 .container {
     display: flex;
     justify-content: start;
@@ -103,41 +110,34 @@
     font-weight: bold;
 } */
 
-.menu
-{
-    display: flex;
-    color: white;
-    .button
-    {
-        border: solid #E02A26 2px;
-        border-radius: 30px;
-        padding: 4px 10px;
-        margin: 0 12px;
-        font-size: 1em;
-        white-space: nowrap;
-    }
-    .button:hover{
-        background-color: #26E065;
-        border-color: #26E065;
-        color: black;
-    }
-    .button:active{
-        background-color: #E02A26;
-        border-color: #E02A26;
-    }
-}
+/*.menu*/
+/*{*/
+/*    display: flex;*/
+/*    color: white;*/
+/*    .button*/
+/*    {*/
+/*        border: solid #E02A26 2px;*/
+/*        border-radius: 30px;*/
+/*        padding: 4px 10px;*/
+/*        margin: 0 12px;*/
+/*        font-size: 1em;*/
+/*        white-space: nowrap;*/
+/*    }*/
+/*    .button:hover{*/
+/*        background-color: #26E065;*/
+/*        border-color: #26E065;*/
+/*        color: black;*/
+/*    }*/
+/*    .button:active{*/
+/*        background-color: #E02A26;*/
+/*        border-color: #E02A26;*/
+/*    }*/
+/*}*/
 
 @font-face {
-    font-family: 'MuseoSansH2';
+    font-family: 'MuseoSans';
     src: url('../fonts/Museo/MuseoSansCyrl-500.ttf');
     font-weight: 300;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'MuseoSansH1';
-    src: url('../fonts/Museo/MuseoSansCyrl-700.ttf');
-    font-weight: 700;
     font-style: normal;
   }
 
@@ -163,8 +163,8 @@
   }
 
 
-* {
-    font-family: 'MuseoSans100', sans-serif;
+*{
+    font-family: 'MuseoSans', sans-serif;
 }
 
 .MuseoBold{

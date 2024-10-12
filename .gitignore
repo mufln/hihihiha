@@ -1,3 +1,6 @@
 
 /gitignore
-C:\Users\User\Desktop\kokoc\next-app\app\article-editor.tsx
+.idea
+back/venv
+back/static
+.gitignore
