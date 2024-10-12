@@ -1,9 +1,10 @@
-import './tbody.css';
+import "../../styles/tbody.css";
 import React from 'react';
 import TeamTitle from '@/components/titles/team';
+import {useRouter} from "next/navigation";
 
 export default function Component() {
-  const router = useRouter();
+    // const router = useRouter();
     const previewData = [
         {
             title: 'Иван Иванов',
@@ -56,4 +57,4 @@ export default function Component() {
     )
 }
 
-export default Body;
+// export default Body;

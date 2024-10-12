@@ -3,7 +3,7 @@ import React from 'react'
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import NewsTitle from '@/components/titles/news'
-import { useRouter } from 'next/navigation'
+import {useRouter} from 'next/navigation'
 import {QueryClient, useQuery} from "@tanstack/react-query";
 // import { it } from 'node:test'
 
@@ -45,7 +45,7 @@ const queryClient = new QueryClient();
 
 
 async function getNews() {
-    let response = await fetch('http://localhost:8000/posts/',{
+    let response = await fetch('http://localhost:8000/posts/', {
         method: "GET",
         // credentials: "include",
         // headers: {"accept":"application/json"}
@@ -56,40 +56,38 @@ async function getNews() {
 }
 
 export default function CardWithBackground() {
-  const router = useRouter();
-  return (
-    <div  className=' bg-white p-10 w-full'>
-    <NewsTitle/>
     const {status, data} = useQuery({
         queryKey: ['news'],
-        queryFn: getNews})
+        queryFn: getNews
+    })
     console.log(data)
-    console.log(process.env.host)
+    const router = useRouter();
     return (
         <div className='lg:p-10 bg-white md:px-4 px-4 py-2 w-full'>
             <NewsTitle/>
-
             <div className="flex flex-wrap gap-4 my-10 lg:mx-12 place-content-center ">
                 {status === 'error' && <p>{status}</p>}
-                {status === 'loading' && <p style={{margin:"auto", display:"block", width:"max-content"}}>{status}</p>}
+                {status === 'loading' &&
+                    <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
                 {status === 'success' && (
-                data.map((item) => (
-                    <Card key={item.id}
-                          className=" border w-full duration-300 lg:max-w-3xl md:max-w-2xl overflow-hidden rounded-md ">
-                        <div>
-                            <img
-                                src={process.env.NEXT_PUBLIC_API_URL + item.media[0].thumbnail}
-                                alt={item.title}
-                                className="shadow-sm w-full aspect-video object-cover rounded-md bg-gradient-to-r from-indigo-500"
-                            />
-                            {/*<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/0 " />*/}
-                        </div>
-                        <CardTitle
-                            className="xl:text-2xl duration-300 lg:text-lg md:text-md xl:m-10 lg:m-6 md:m-4 m-2 text-sm my-2 font-bold text-black box-content h-24">
-                            {item.title}
-                        </CardTitle>
-                        <CardContent className="text-xs text-black xl:mx-10 lg:mx-6 md:mx-4 m-2 mb-2 ">{item.created_at}</CardContent>
-                    </Card>)))}
+                    data.map((item) => (
+                        <Card key={item.id}
+                              className=" border w-full duration-300 lg:max-w-3xl md:max-w-2xl overflow-hidden rounded-md ">
+                            <div>
+                                <img
+                                    src={process.env.NEXT_PUBLIC_API_URL + item.media[0].thumbnail}
+                                    alt={item.title}
+                                    className="shadow-sm w-full aspect-video object-cover rounded-md bg-gradient-to-r from-indigo-500"
+                                />
+                                {/*<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/0 " />*/}
+                            </div>
+                            <CardTitle
+                                className="xl:text-2xl duration-300 lg:text-lg md:text-md xl:m-10 lg:m-6 md:m-4 m-2 text-sm my-2 font-bold text-black box-content h-24">
+                                {item.title}
+                            </CardTitle>
+                            <CardContent
+                                className="text-xs text-black xl:mx-10 lg:mx-6 md:mx-4 m-2 mb-2 ">{item.created_at}</CardContent>
+                        </Card>)))}
             </div>
         </div>
     )
