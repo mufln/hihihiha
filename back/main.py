@@ -7,12 +7,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import auth, users, posts, resources, merch
 
 app = FastAPI(
-    description="Sample Admin API, with user management, authentication, posts, and merch store endpoints",
+    description="kokoc api",
 )
+
+allowed_hosts = ["http://127.0.0.1:3000", "http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_hosts,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,4 +32,4 @@ app.include_router(merch.router)
 app.mount("/static", StaticFiles(directory="./static"), name="static")
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="localhost", port=8000)

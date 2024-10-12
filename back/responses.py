@@ -2,7 +2,7 @@ import datetime
 
 from pydantic import BaseModel
 
-from models import DbModel, Datetime
+from models import DbModel
 
 
 class UserResponse(BaseModel):
@@ -16,8 +16,8 @@ class PostResponse(DbModel):
     title: str
     text_md: str
     media: list[dict[str, str]] = []
-    created_at: Datetime
-    updated_at: Datetime
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
 
 class MerchResponse(DbModel):
     name: str

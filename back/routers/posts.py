@@ -23,12 +23,14 @@ async def read_posts(
         media = db.execute(
             "SELECT filename, thumbnail from resources JOIN (SELECT * FROM post_resources WHERE post_id = %s) ON resources.id = resource_id",
             (post.id,)).fetchall()
+        post.created_at = post.created_at.strftime("%Y %m %d - %H:%M")
         post.media = [
             {
                 "filename": "/static/" + item["filename"],
                 "thumbnail": "/static/" + item["thumbnail"],
             } for item in media
         ]
+
     return posts
 
 

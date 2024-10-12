@@ -6,11 +6,6 @@ from pydantic import BaseModel, BeforeValidator
 from query_generator import QueryGenerator
 
 
-def validate_datetime(v: str) -> datetime:
-    return datetime.strptime(v, "%Y-%m-%d %H:%M:%S")
-
-Datetime = Annotated[datetime, BeforeValidator(validate_datetime)]
-
 class DbModel(BaseModel):
     @classmethod
     def select(cls) -> QueryGenerator['Self']:
@@ -48,8 +43,8 @@ class Post(DbModel):
     title: str
     text_md: str
     author_id: str
-    created_at: Datetime
-    updated_at: Datetime
+    created_at: datetime
+    updated_at: datetime
 
 
 class Resource(DbModel):
@@ -65,4 +60,4 @@ class Merch(DbModel):
     name: str
     description: str
     price: int
-    created_at: Datetime
+    created_at: datetime
