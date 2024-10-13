@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel
@@ -46,4 +47,47 @@ class MerchUpdateRequest(BaseModel):
     name: str | None = None
     description: str | None = None
     price: int | None = None
+    media: list[int] | None = None
+
+class PlayerCreateRequest(BaseModel):
+    id: int
+    name: str
+    role: str
+    bio: str
+    joined_at: datetime
+    left_at: datetime | None = None
+    media: list[int]
+
+class PlayerUpdateRequest(BaseModel):
+    name: str | None = None
+    role: str | None = None
+    bio: str | None = None
+    joined_at: datetime | None = None
+    left_at: datetime | None = None
+    media: list[int] | None = None
+
+class StatsCreateRequest(BaseModel):
+    season_name: str
+    player_id: int
+    games: int
+    goals : int
+    passes : int
+    yellow_cards : int
+    red_cards : int
+
+class StatsUpdateRequest(BaseModel):
+    season_name: str | None = None
+    games: int | None = None
+    goals : int | None = None
+    passes : int | None = None
+    yellow_cards : int | None = None
+    red_cards : int | None = None
+
+class PlayerUpdateRequest(BaseModel):
+    id: int
+    name: str | None = None
+    role: str | None = None
+    bio: str | None = None
+    joined_at: datetime | None = None
+    left_at: datetime | None = None
     media: list[int] | None = None
