@@ -21,7 +21,7 @@ class ResourceResponse(BaseModel):
     filename: str
     thumbnail: str
 
-@router.post("/")
+@router.post("")
 async def create_resource(
         db: Annotated[psycopg.Connection, Depends(get_db)],
         admin: Annotated[User, Depends(get_admin)],

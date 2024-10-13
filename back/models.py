@@ -29,6 +29,7 @@ class DbModel(BaseModel):
 
 class User(DbModel):
     __tablename__ = "users"
+
     id: int
     password: str
     username: str
@@ -40,6 +41,7 @@ class User(DbModel):
 
 class Post(DbModel):
     __tablename__ = "posts"
+
     title: str
     text_md: str
     author_id: str
@@ -49,6 +51,7 @@ class Post(DbModel):
 
 class Resource(DbModel):
     __tablename__ = "resources"
+
     id: int
     filename: str
     thumbnail: str
@@ -56,6 +59,7 @@ class Resource(DbModel):
 
 class Merch(DbModel):
     __tablename__ = "merch"
+
     id: int
     name: str
     description: str
@@ -64,6 +68,7 @@ class Merch(DbModel):
 
 class Player(DbModel):
     __tablename__ = "players"
+
     id: int
     name: str
     role: str
@@ -73,6 +78,7 @@ class Player(DbModel):
 
 class Stats(DbModel):
     __tablename__ = "stats"
+
     id: int
     season_name: str
     player_id: int
@@ -83,7 +89,9 @@ class Stats(DbModel):
     red_cards : int
     created_at: datetime
 
-class Match(BaseModel):
+class Match(DbModel):
+    __tablename__ = "matches"
+
     id: int
     op1_id: int
     op2_id: int
@@ -93,8 +101,9 @@ class Match(BaseModel):
     created_at: datetime
     is_finished: bool
 
-class Team(BaseModel):
+class Team(DbModel):
+    __tablename__ = "teams"
+
     id: int
     name: str
-    logo: str
 

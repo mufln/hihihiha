@@ -45,7 +45,7 @@ const queryClient = new QueryClient();
 
 
 async function getNews() {
-    let response = await fetch('http://localhost:8000/posts/', {
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/posts/', {
         method: "GET",
         // credentials: "include",
         // headers: {"accept":"application/json"}

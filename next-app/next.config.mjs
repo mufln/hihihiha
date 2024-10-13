@@ -2,7 +2,15 @@
 import createMDX from '@next/mdx';
 
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx']
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  rewrites: async () => {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:8000/:path*',
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX({

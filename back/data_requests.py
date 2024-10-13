@@ -99,9 +99,8 @@ class MatchUpdateRequest(BaseModel):
 
 class TeamCreateRequest(BaseModel):
     name: str
-    media: list[int]
-
+    logo_id: int | None = None
 
 class TeamUpdateRequest(BaseModel):
     name: str | None = None
-    media: list[int] | None = None
+    logo_id: int | None = None

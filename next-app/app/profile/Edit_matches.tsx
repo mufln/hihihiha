@@ -8,15 +8,16 @@ import React from "react";
 let queryClient = new QueryClient();
 
 async function getMatches() {
-    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches', {
-        method: "GET"
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches/', {
+        method: "GET",
+        credentials: "include"
     })
     return response.json();
 }
 
 
 async function addMatch() {
-    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches', {
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches/', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(
@@ -31,7 +32,7 @@ async function addMatch() {
 }
 
 async function getTeams() {
-    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches/teams/', {
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/teams/', {
         method: "GET"
     })
     return response.json();
@@ -73,9 +74,7 @@ export default function Edit_matches() {
     console.log(data)
     return (
         <div className="bg-white p-5 w-full gap-4 text-black">
-            <h1 className="text-2xl font-bold flex flex-row">Матчи
-
-            </h1>
+            <h1 className="text-2xl font-bold flex flex-row">Матчи</h1>
             <div className="flex my-2 border-2 border p-2 rounded-lg">
                 {/*<Select items={teams} label="Выберите первую команду" className="w-1/2">*/}
                 {/*    {(team) => <SelectItem key={team.id}>{team.name}</SelectItem>}*/}
@@ -87,10 +86,10 @@ export default function Edit_matches() {
                         className="mr-0  ml-auto border-2 border border-black text-xs hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Добавить матч</button>
             </div>
             {status === 'error' && <p>{status}</p>}
-            {status === 'loading' &&
+            {status === 'pending' &&
                 <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
             {status === 'success' && (
-                data.map((item) => (
+                data.map((item: any) => (
 
                     <div key={item.id} className="flex my-2 border-2 border p-2 rounded-lg">
                         <div>Играет</div>

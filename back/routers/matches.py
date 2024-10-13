@@ -7,14 +7,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from db import get_db
 from models import User, Match, Team
-from data_requests import UserUpdateRequest, MatchCreateRequest, MatchUpdateRequest, TeamCreateRequest, \
-    TeamUpdateRequest
+from data_requests import MatchCreateRequest, MatchUpdateRequest, TeamCreateRequest, TeamUpdateRequest
 from responses import MatchResponse, TeamResponse
 from routers import auth
 
 router = APIRouter(prefix="/matches")
 
-@router.get('/', response_model=list[MatchResponse])
+@router.get('', response_model=list[MatchResponse])
 async def read_matches(
         db: Annotated[psycopg.Connection, Depends(get_db)],
 ):
@@ -24,12 +23,12 @@ async def read_matches(
         match.created_at = match.created_at.strftime("%Y %m %d - %H:%M")
         match.math_date = match.math_date.strftime("%Y %m %d - %H:%M")
         match.op1 = TeamResponse(**db.execute("SELECT * FROM teams WHERE id = %s", (match.op1_id,)).fetchone())
-        match.op1.logo = db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (match.op1_id,)).fetchone()["filename"]
+        match.op1.logo = "static/" + db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (match.op1_id,)).fetchone()["filename"]
         match.op2 = TeamResponse(**db.execute("SELECT * FROM teams WHERE id = %s", (match.op2_id,)).fetchone())
-        match.op2.logo = db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (match.op2_id,)).fetchone()["filename"]
+        match.op2.logo = "static/" + db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (match.op2_id,)).fetchone()["filename"]
     return matches
 
-@router.post("/")
+@router.post("")
 async def create_match(
         match: MatchCreateRequest,
         _admin: Annotated[User, Depends(auth.get_current_active_user)],
@@ -85,65 +84,3 @@ async def delete_match(
     return {"message": "Match deleted"}
 
 
-@router.get("/teams/", response_model=list[TeamResponse])
-async def read_teams(
-        db: Annotated[psycopg.Connection, Depends(get_db)],
-):
-    teams = db.execute("SELECT * FROM teams ORDER BY created_at DESC").fetchall()
-    teams = [TeamResponse(**team) for team in teams]
-    for team in teams:
-        team.logo = db.execute("SELECT filename from resources join (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (team.id,)).fetchone()["filename"]
-    return teams
-
-@router.post("/teams/")
-async def create_team(
-        team: TeamCreateRequest,
-        _admin: Annotated[User, Depends(auth.get_current_active_user)],
-        db: Annotated[psycopg.Connection, Depends(get_db)],
-):
-    team_id = db.execute(
-        "INSERT INTO teams (name, created_at) VALUES (%s, %s) RETURNING id", (
-            team.name,
-            datetime.datetime.now(datetime.UTC),
-        )).fetchone()["id"]
-    try:
-        for resource_id in team.media:
-            db.execute("INSERT INTO team_resources (team_id, resource_id) VALUES (%s, %s)", (team_id, resource_id))
-    except psycopg.errors.ForeignKeyViolation:
-        raise HTTPException(status_code=400, detail="Media not found")
-    db.commit()
-    return {"message": "Team created"}
-
-@router.post("/teams/{id}")
-async def update_team(
-        id: int,
-        request: TeamUpdateRequest,
-        _admin: Annotated[User, Depends(auth.get_current_active_user)],
-        db: Annotated[psycopg.Connection, Depends(get_db)],
-):
-    team = Team.select().where("id = %s", (id,)).single().on(db)
-    if not team:
-        raise HTTPException(status_code=404, detail="Team not found")
-    if request.name:
-        db.execute("UPDATE teams SET name = %s WHERE id = %s", (request.name, id))
-    if request.media:
-        db.cursor().execute("DELETE FROM team_resources WHERE team_id = %s", (id,))
-        db.cursor().executemany("INSERT INTO team_resources (team_id, resource_id) VALUES (%s, %s)", [
-            (id, resource_id) for resource_id in request.media
-        ])
-    db.commit()
-    return {"message": "Team updated"}
-
-@router.delete("/teams/{id}")
-async def delete_team(
-        id: int,
-        _admin: Annotated[User, Depends(auth.get_current_active_user)],
-        db: Annotated[psycopg.Connection, Depends(get_db)],
-):
-    team = Team.select().where("id = %s", (id,)).single().on(db)
-    if not team:
-        raise HTTPException(status_code=404, detail="Team not found")
-    db.execute("DELETE FROM team_resources WHERE team_id = %s", (id,))
-    db.execute("DELETE FROM teams WHERE id = %s", (id,))
-    db.commit()
-    return {"message": "Team deleted"}

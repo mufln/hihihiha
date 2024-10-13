@@ -14,10 +14,12 @@ import Edit_team from "./Edit_team";
 import Edit_store from "./Edit_store";
 import Edit_system from "./Edit_system";
 import Edit_teams from "./Edit_teams";
+import Login from "@/app/profile/Login";
 
 async function getUser() {
-    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/me', {
-        method: "GET"
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/users/me', {
+        method: "GET",
+        credentials: "include"
     })
     return response.json();
 }
@@ -34,8 +36,9 @@ export default function CardWithBackground() {
         queryFn: () => getUser()
     })
     console.log(data)
-    const [activeComponent, setActiveComponent] = useState<string>('edit_matches');
+    const [activeComponent, setActiveComponent] = useState<string>('login');
 
+    const login = () => setActiveComponent('login');
     const showMatches = () => setActiveComponent('edit_matches');
     const showTeams = () => setActiveComponent('edit_teams');
     const showNews = () => setActiveComponent('edit_news');
@@ -78,6 +81,7 @@ export default function CardWithBackground() {
                 </div>
             </div>
             <section className="w-4/5">
+                {activeComponent === 'login' && <Login/> }
                 {activeComponent === 'edit_matches' && <Edit_matches/> }
                 {activeComponent === 'edit_teams' && <Edit_teams/> }
                 {activeComponent === 'edit_news' && <Edit_news/>}

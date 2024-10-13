@@ -2,7 +2,7 @@ from passlib.hash import sha512_crypt as crypt
 import random
 import psycopg
 import string
-from typing import Annotated
+from typing import Annotated, Optional
 
 from fastapi import Depends, HTTPException, APIRouter, Response, Request
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -14,7 +14,7 @@ from data_requests import UserCreateRequest
 
 router = APIRouter(prefix="/auth")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login", auto_error=False)
 
 
 class Token(DbModel):
@@ -23,10 +23,11 @@ class Token(DbModel):
     user_id: int
 
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)],
+async def get_current_user(token: Annotated[Optional[str], Depends(oauth2_scheme)],
                            request: Request,
                            db: Annotated[psycopg.Connection, Depends(get_db)]):
     session_token = token or request.cookies.get("SID")
+    print(request.cookies.get("SID"))
     user = Token.select().where("token = %s", (session_token,)).single().on(db)
     if not user:
         raise HTTPException(
@@ -72,7 +73,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db.execute("INSERT INTO tokens (token, user_id) VALUES (%s, %s)", (token, user.id))
     db.commit()
     if not bearer:
-        response.set_cookie("SID", token, httponly=True)
+        response.set_cookie("SID", token, httponly=True, secure=True, samesite="none")
         return
     return {"access_token": token, "token_type": "bearer"}
 

@@ -2,6 +2,7 @@ import psycopg
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from starlette.requests import Request
 
 from db import get_db
 from models import User
@@ -10,6 +11,11 @@ from responses import UserResponse, PostResponse
 from routers import auth
 
 router = APIRouter(prefix="/users")
+
+@router.get('/test')
+async def test(request: Request):
+    print(request.cookies)
+    return {"message": "test"}
 
 
 @router.get("/me", response_model=UserResponse)
