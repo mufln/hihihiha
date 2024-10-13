@@ -31,7 +31,7 @@ async function addMatch() {
 }
 
 async function getTeams() {
-    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/teams', {
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches/teams/', {
         method: "GET"
     })
     return response.json();

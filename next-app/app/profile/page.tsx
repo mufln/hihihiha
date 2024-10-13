@@ -13,7 +13,7 @@ import Edit_news from "./Edit_news";
 import Edit_team from "./Edit_team";
 import Edit_store from "./Edit_store";
 import Edit_system from "./Edit_system";
-
+import Edit_teams from "./Edit_teams";
 
 async function getUser() {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/me', {
@@ -37,6 +37,7 @@ export default function CardWithBackground() {
     const [activeComponent, setActiveComponent] = useState<string>('edit_matches');
 
     const showMatches = () => setActiveComponent('edit_matches');
+    const showTeams = () => setActiveComponent('edit_teams');
     const showNews = () => setActiveComponent('edit_news');
     const showTeam = () => setActiveComponent('edit_team');
     const showStore = () => setActiveComponent('edit_store');
@@ -60,6 +61,8 @@ export default function CardWithBackground() {
                     {/*{(status === 'success' && data.role === "admin") && (*/}
                     <button onClick={showMatches}
                             className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Матчи</button>
+                    <button onClick={showTeams}
+                            className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Команды</button>
                     <button onClick={showNews}
                             className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Новости </button>
                     <button onClick={showTeam}
@@ -76,6 +79,7 @@ export default function CardWithBackground() {
             </div>
             <section className="w-4/5">
                 {activeComponent === 'edit_matches' && <Edit_matches/> }
+                {activeComponent === 'edit_teams' && <Edit_teams/> }
                 {activeComponent === 'edit_news' && <Edit_news/>}
                 {activeComponent === 'edit_team' && <Edit_team/>}
                 {activeComponent === 'edit_store' && <Edit_store/>}
