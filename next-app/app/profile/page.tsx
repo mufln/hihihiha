@@ -61,24 +61,24 @@ export default function CardWithBackground() {
                 </div>
                 <div className=" gap-2 flex flex-wrap text-xl">
                     {status === 'error' && <p>{status}</p>}
-                    {status === 'loading' &&
+                    {status === 'pending' &&
                         <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
                     {/*{(status === 'success' && data.role === "admin") && (*/}
                     <button onClick={showMatches}
-                            className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Матчи</button>
+                            className="bg-black w-full min-w-52 text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Матчи</button>
                     <button onClick={showTeams}
-                            className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Команды</button>
+                            className="bg-black w-full min-w-52 text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Команды</button>
                     <button onClick={showNews}
-                            className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Новости </button>
+                            className="bg-black w-full min-w-52 text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Новости </button>
                     <button onClick={showTeam}
-                            className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Команда</button>
+                            className="bg-black w-full min-w-52 text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Команда</button>
                     <button onClick={showStore}
-                        className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Магазин</button>
+                        className="bg-black w-full min-w-52 text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Магазин</button>
                     <button onClick={showSystem}
-                            className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Система
+                            className="bg-black w-full min-w-52 text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Система
                     </button>
                     <button onClick={showCart}
-                            className="bg-black w-full text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Покупки</button>
+                            className="bg-black w-full min-w-52 text-white rounded-lg p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black duration-100">Покупки</button>
                     {/*<button className="bg-black w-full text-white rounded-[30px] p-3 hover:font-bold hover:text-black hover:bg-white border-2 border-black " onClick={showFifthComponent}>Панель Управления</button>*/}
                 </div>
             </div>

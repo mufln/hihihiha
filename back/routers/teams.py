@@ -53,11 +53,9 @@ async def update_team(
         raise HTTPException(status_code=404, detail="Team not found")
     if request.name:
         db.execute("UPDATE teams SET name = %s WHERE id = %s", (request.name, id))
-    if request.media:
+    if request.logo_id:
         db.cursor().execute("DELETE FROM team_resources WHERE team_id = %s", (id,))
-        db.cursor().executemany("INSERT INTO team_resources (team_id, resource_id) VALUES (%s, %s)", [
-            (id, resource_id) for resource_id in request.media
-        ])
+        db.cursor().execute("INSERT INTO team_resources (team_id, resource_id) VALUES (%s, %s)", (id, request.logo_id))
     db.commit()
     return {"message": "Team updated"}
 

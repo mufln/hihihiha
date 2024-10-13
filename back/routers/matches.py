@@ -1,13 +1,13 @@
 import datetime
 
 import psycopg
-from typing import Annotated, Literal
+from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException
 
 from db import get_db
-from models import User, Match, Team
-from data_requests import MatchCreateRequest, MatchUpdateRequest, TeamCreateRequest, TeamUpdateRequest
+from models import User, Match
+from data_requests import MatchCreateRequest, MatchUpdateRequest
 from responses import MatchResponse, TeamResponse
 from routers import auth
 
