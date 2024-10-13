@@ -33,17 +33,26 @@ async function addTeam(name: string, logo_ref: any ) {
 }
 
 
-async function updateTeam(id: number) {
-    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/teams/' + id, {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
+async function updateTeam(id: number, name: string, logo_ref: any) {
+    let fd = new FormData();
+    fd.append("file", logo_ref.current.files[0]);
+    // console.log(logo.)
+    let logo_response = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/resources/', {
+        method: "POST",
+        body: fd,
+        credentials: "include"
+    })).json()
+    console.log(logo_response.id)
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/teams/', {
+        method: "POST",
+        credentials: "include",
+        // headers: {"Content-Type": "application/json"},
         body: JSON.stringify(
             {
-                name: "Черепаха",
-                logo: "https://cdn.pixabay.com/photo/2015/10/23/22/00/cat-828485__340.png"
+                "name": name,
+                "logo": logo_response.id
             })
     })
-    return response.json();
 }
 
 
@@ -90,8 +99,9 @@ export default function Edit_teams() {
             {status === 'success' && (
                 teams.map((item: any) => (
                     <div key={item.id} className="flex my-2 border-2 border p-2 rounded-lg">
-                        <div className="m-2">{item.name}</div>
+                        <input className="m-2">{item.name}</input>
                         <img src={process.env.NEXT_PUBLIC_API_URL +"/" +item.logo} className=" aspect-square mx-10 max-w-10 p-1" alt="logo"></img>
+                        <input type="file" name="file" ref={fileInput} />
                         <button className="border border-2 border-black hover:text-white mr-0 ml-auto hover:bg-black duration-100 rounded w-10" onClick={() => deleteTeam(item.id)}>X</button>
                     </div>)))}
         </div>
