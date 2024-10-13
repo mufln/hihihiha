@@ -3,7 +3,7 @@
 
 import {QueryClient, useQuery} from "@tanstack/react-query";
 import React from "react";
-import {Select, SelectItem} from "@nextui-org/select";
+// import {Select, SelectItem} from "@nextui-org/select";
 
 let queryClient = new QueryClient();
 
@@ -77,12 +77,12 @@ export default function Edit_matches() {
 
             </h1>
             <div className="flex my-2 border-2 border p-2 rounded-lg">
-                <Select items={teams} label="Выберите первую команду" className="w-1/2">
-                    {(team) => <SelectItem key={team.id}>{team.name}</SelectItem>}
-                </Select>
-                <Select items={teams} label="Выберите вторую команду" className="w-1/2">
-                    {(team) => <SelectItem key={team.id}>{team.name}</SelectItem>}
-                </Select>
+                {/*<Select items={teams} label="Выберите первую команду" className="w-1/2">*/}
+                {/*    {(team) => <SelectItem key={team.id}>{team.name}</SelectItem>}*/}
+                {/*</Select>*/}
+                {/*<Select items={teams} label="Выберите вторую команду" className="w-1/2">*/}
+                {/*    {(team) => <SelectItem key={team.id}>{team.name}</SelectItem>}*/}
+                {/*</Select>*/}
                 <button onClick={() => addMatch()}
                         className="mr-0  ml-auto border-2 border border-black text-xs hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Добавить матч</button>
             </div>
