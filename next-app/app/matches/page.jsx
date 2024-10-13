@@ -51,7 +51,7 @@ export default function CardWithBackground() {
           }}>
           <CardHeader className="pb-2">
             <div className="flex justify-between items-center">
-              <Badge variant="secondary" className='border-none bg-[#26E065] text-black MuseoBoldItalic px-2 rounded-3xl'>{item.title}</Badge>
+              <Badge variant="secondary" className='border-none bg-[#26E065] text-black MuseoBoldItalic px-2 py-1 rounded-3xl'>{item.title}</Badge>
             </div>
           </CardHeader>
           <CardContent className='flex flex-col gap-2 justify-center items-center'>
@@ -63,7 +63,7 @@ export default function CardWithBackground() {
               <div className="text-center flex flex-col gap-1 items-center">
                 {item.score === '' ? <div className="text-3xl font-bold mx-auto">VS</div> : <div className="text-3xl font-bold mx-auto">{item.score}</div>}
                 <span>{item.date}</span>
-                <Badge variant="secondary" className='border-none bg-[#E02A26] text-white MuseoBold px-2 rounded-3xl max-w-max'>
+                <Badge variant="secondary" className='border-none bg-[#E02A26] text-white MuseoBold px-2 py-1 rounded-3xl max-w-max'>
                     {item.time}
                 </Badge>
                 {/* <div className="text-sm text-muted-foreground mt-1 mx-auto text-center"></div> */}
@@ -74,7 +74,7 @@ export default function CardWithBackground() {
                 <h3 className="">{item.teamB.n}</h3>
               </div>
             </div>
-            <Badge variant="secondary" className='border-none bg-[#26E065] text-black px-2 rounded-3xl flex max-w-max'>
+            <Badge variant="secondary" className='border-none bg-[#26E065] text-black px-2 py-1 rounded-3xl flex max-w-max'>
                 <MapPinIcon className="w-4 h-4 mr-1" />
                 <span className="MuseoBoldItalic">{item.place}</span>
             </Badge>

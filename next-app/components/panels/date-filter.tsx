@@ -27,7 +27,7 @@ export default function DateFilter() {
     }
 
   return (
-    <Card className="w-full max-w-md p-8 text-black space-y-2">
+    <Card className="w-full max-w-max p-8 text-black space-y-2">
       <CardHeader>
         <CardTitle className="MuseoBold">Фильтровать по дате</CardTitle>
       </CardHeader>

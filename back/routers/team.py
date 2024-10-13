@@ -12,7 +12,7 @@ from responses import PlayerResponse, StatsResponse
 from routers import auth
 router = APIRouter(prefix="/team")
 
-@router.get("/", response_model=list[PlayerResponse])
+@router.get("", response_model=list[PlayerResponse])
 async def read_players(
         db: Annotated[psycopg.Connection, Depends(get_db)],
 ):
@@ -50,7 +50,7 @@ async def read_player( player_id: int,db: Annotated[psycopg.Connection, Depends(
     ]
     return res
 
-@router.post("/")
+@router.post("")
 async def create_player(
         player: PlayerCreateRequest,
         _admin: Annotated[User, Depends(auth.get_current_active_user)],

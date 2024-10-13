@@ -12,7 +12,8 @@ const queryClient = new QueryClient();
 
 let getTeam = async () => {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL+ '/team', {
-        method: "GET"
+        method: "GET",
+        credentials: "include"
     })
     return response.json();
 }

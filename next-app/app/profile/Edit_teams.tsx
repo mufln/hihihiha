@@ -99,9 +99,8 @@ export default function Edit_teams() {
             {status === 'success' && (
                 teams.map((item: any) => (
                     <div key={item.id} className="flex my-2 border-2 border p-2 rounded-lg">
-                        <input className="m-2">{item.name}</input>
+                        <input className="m-2" defaultValue={item.name}/>
                         <img src={process.env.NEXT_PUBLIC_API_URL +"/" +item.logo} className=" aspect-square mx-10 max-w-10 p-1" alt="logo"></img>
-                        <input type="file" name="file" ref={fileInput} />
                         <button className="border border-2 border-black hover:text-white mr-0 ml-auto hover:bg-black duration-100 rounded w-10" onClick={() => deleteTeam(item.id)}>X</button>
                     </div>)))}
         </div>

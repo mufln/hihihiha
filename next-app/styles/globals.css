@@ -251,5 +251,6 @@ ul{
     }
     .button:active{
         background-color: #E02A26;
+        border-color: #E02A26;
     }
 }

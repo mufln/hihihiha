@@ -12,7 +12,7 @@ from routers import auth
 
 router = APIRouter(prefix="/merch")
 
-@router.get("/")
+@router.get("")
 async def get_merch_items(
         db: Annotated[psycopg.Connection, Depends(get_db)],
 ):
@@ -31,7 +31,7 @@ async def get_merch_items(
     return res
 
 
-@router.post("/")
+@router.post("")
 async def create_merch_item(
         merch: MerchCreateRequest,
         db: Annotated[psycopg.Connection, Depends(get_db)],

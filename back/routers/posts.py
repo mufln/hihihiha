@@ -13,7 +13,7 @@ from routers import auth
 router = APIRouter(prefix="/posts")
 
 
-@router.get("/")
+@router.get("")
 async def read_posts(
         db: Annotated[psycopg.Connection, Depends(get_db)],
 ) -> list[PostResponse]:
@@ -34,7 +34,7 @@ async def read_posts(
     return posts
 
 
-@router.post("/")
+@router.post("")
 async def create_post(
         admin: Annotated[User, Depends(auth.get_admin)],
         post: PostCreateRequest,
