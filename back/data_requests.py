@@ -83,11 +83,25 @@ class StatsUpdateRequest(BaseModel):
     yellow_cards : int | None = None
     red_cards : int | None = None
 
-class PlayerUpdateRequest(BaseModel):
-    id: int
+class MatchCreateRequest(BaseModel):
+    op1_id: int
+    op2_id: int
+    op1_score: int | None = None
+    op2_score: int | None = None
+    match_date: datetime
+
+class MatchUpdateRequest(BaseModel):
+    op1_id: int | None = None
+    op2_id: int | None = None
+    op1_score: int | None = None
+    op2_score: int | None = None
+    math_date: datetime | None = None
+
+class TeamCreateRequest(BaseModel):
+    name: str
+    media: list[int]
+
+
+class TeamUpdateRequest(BaseModel):
     name: str | None = None
-    role: str | None = None
-    bio: str | None = None
-    joined_at: datetime | None = None
-    left_at: datetime | None = None
     media: list[int] | None = None

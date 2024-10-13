@@ -63,7 +63,7 @@ export default function CardWithBackground() {
     console.log(data)
     const router = useRouter();
     return (
-        <div className='lg:p-10 bg-white md:px-4 px-4 py-2 w-full'>
+        <div className='lg:p-10 bg-white to  md:px-4 px-4 py-2 w-full'>
             <NewsTitle/>
             <div className="flex flex-wrap gap-4 my-10 lg:mx-12 place-content-center ">
                 {status === 'error' && <p>{status}</p>}
@@ -72,7 +72,7 @@ export default function CardWithBackground() {
                 {status === 'success' && (
                     data.map((item) => (
                         <Card key={item.id}
-                              className=" border w-full duration-300 lg:max-w-3xl md:max-w-2xl overflow-hidden rounded-md ">
+                              className=" border bg-white w-full duration-300 lg:max-w-3xl md:max-w-2xl overflow-hidden rounded-md ">
                             <div>
                                 <img
                                     src={process.env.NEXT_PUBLIC_API_URL + item.media[0].thumbnail}

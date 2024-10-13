@@ -1,0 +1,3 @@
+DROP TABLE team_resources CASCADE;
+DROP TABLE teams CASCADE;
+DROP TABLE matches CASCADE;

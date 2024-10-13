@@ -46,3 +46,20 @@ class PlayerResponse(DbModel):
     left_at: datetime.datetime | None = None
     media: list[dict[str, str]] = []
 
+class TeamResponse(DbModel):
+    id: int
+    name: str
+    logo: str | None = ''
+
+class MatchResponse(DbModel):
+    id: int
+    op1_id: int
+    op1: TeamResponse | None = None
+    op2_id: int
+    op2: TeamResponse | None = None
+    op1_score: int
+    op2_score: int
+    math_date: datetime.datetime
+    created_at: datetime.datetime
+    is_finished: bool
+

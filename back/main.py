@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import auth, users, posts, resources, merch, team
+from routers import auth, users, posts, resources, merch, team, matches
 
 app = FastAPI(
     description="kokoc api",
@@ -30,6 +30,7 @@ app.include_router(posts.router)
 app.include_router(resources.router)
 app.include_router(merch.router)
 app.include_router(team.router)
+app.include_router(matches.router)
 app.mount("/static", StaticFiles(directory="./static"), name="static")
 
 if __name__ == "__main__":

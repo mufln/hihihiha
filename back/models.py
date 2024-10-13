@@ -82,3 +82,19 @@ class Stats(DbModel):
     yellow_cards : int
     red_cards : int
     created_at: datetime
+
+class Match(BaseModel):
+    id: int
+    op1_id: int
+    op2_id: int
+    op1_score: int
+    op2_score: int
+    math_date: datetime
+    created_at: datetime
+    is_finished: bool
+
+class Team(BaseModel):
+    id: int
+    name: str
+    logo: str
+
