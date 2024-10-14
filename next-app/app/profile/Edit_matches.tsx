@@ -1,7 +1,7 @@
 ﻿'use client'
 
 
-import {QueryClient, useQuery} from "@tanstack/react-query";
+import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 import React, {useEffect, useState} from "react";
 import {Select, SelectItem} from "@nextui-org/select";
 import {boolean} from "property-information/lib/util/types";
@@ -74,6 +74,7 @@ async function updateMatch(props: any) {
 }
 
 function AddMatch(props: {teams: any, editing_existing: boolean, match:any}) {
+    const queryClient = useQueryClient();
     let teams = props.teams
     let match = props.match
     let id = match ? match.id : null
@@ -106,11 +107,20 @@ function AddMatch(props: {teams: any, editing_existing: boolean, match:any}) {
         <div className="my-auto">Завершен?</div>
         <input type="checkbox" className="p-2 ml-2 border border-black  rounded-lg" checked={is_finished} onChange={(e) => setIsFinished(e.target.checked)} placeholder="Завершен"/>
         </div>
-        {!editing_existing && (<button onClick={() => addMatch({p1, p2, score1, score2, date, is_finished})} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Добавить матч</button>)}
+        {!editing_existing && (<button onClick={() => {
+            addMatch({p1, p2, score1, score2, date, is_finished})
+            queryClient.invalidateQueries({queryKey: ["matches"]})
+        }} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Добавить матч</button>)}
         {editing_existing &&
             <>
-            <button onClick={() => updateMatch({id, p1, p2, score1, score2, date, is_finished})} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Изменить матч</button>
-            <button onClick={() => deleteMatch(id)} className="border border-2 border-black hover:text-white mr-0 hover:bg-black duration-100 rounded w-10">X</button>
+            <button onClick={() => {
+                updateMatch({id, p1, p2, score1, score2, date, is_finished})
+                queryClient.invalidateQueries({queryKey: ["matches"]})
+            }} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Изменить матч</button>
+            <button onClick={() => {
+                deleteMatch(id)
+                queryClient.invalidateQueries({queryKey: ["matches"]})
+            }} className="border border-2 border-black hover:text-white mr-0 hover:bg-black duration-100 rounded w-10">X</button>
             </>
         }
     </div>)

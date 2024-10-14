@@ -1,8 +1,8 @@
-﻿import {QueryClient, useQuery} from "@tanstack/react-query";
+﻿'use client'
+import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 import React, {useState} from "react";
 import {json} from "stream/consumers";
 
-const queryClient = new QueryClient();
 async function getTeams() {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/teams/', {
         method: "GET"
@@ -30,8 +30,7 @@ async function addTeam(name: string, logo_ref: any ) {
                 "logo_id": logo_response.id
             })
     })
-    await queryClient.invalidateQueries({queryKey: ["teams"]})
-    return response.json();
+    return await response.json();
 }
 
 
@@ -56,7 +55,6 @@ async function updateTeam(id: number, name: string, logo_ref: any) {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(body)
     })
-    await queryClient.invalidateQueries({queryKey: ["teams"]})
 }
 
 
@@ -65,13 +63,13 @@ async function deleteTeam(id: number) {
         method: "DELETE",
         credentials: "include"
     })
-    await queryClient.invalidateQueries({queryKey: ["teams"]})
     return response.json();
 
 }
 
 
 function AddTeam() {
+    const queryClient = useQueryClient();
     const [name, setName] = useState("")
     const fileInput = React.useRef<HTMLInputElement>(null);
     return (
@@ -80,12 +78,16 @@ function AddTeam() {
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-1/5 border rounded px-2 "/>
             <input type="file" className="my-auto hover:file:bg-black file:duration-100 hover:file:text-white file:py-2 file:bg-white file:border file:rounded "  name="file" ref={fileInput} />
             {/*<input type="text" value={logo} onChange={(e) => setLogo(e.target.value)} className="w-1/5"/>*/}
-            <button className="border border-2 text-sm border-black hover:text-white mr-0 ml-auto hover:bg-black duration-100 rounded w-fit px-2" onClick={() => addTeam(name, fileInput)}>Добавить команду</button>
+            <button className="border border-2 text-sm border-black hover:text-white mr-0 ml-auto hover:bg-black duration-100 rounded w-fit px-2" onClick={() => {
+                addTeam(name, fileInput)
+                queryClient.invalidateQueries({queryKey: ["teams"]})
+            }}>Добавить команду</button>
         </div>
     )
 }
 
 function Team(props: any){
+    const queryClient = useQueryClient();
     const [name, setName] = useState(props.item.name)
     const fileInput = React.useRef<HTMLInputElement>(null);
     console.log(props.item.id)
@@ -94,8 +96,14 @@ function Team(props: any){
             <input className="m-2" defaultValue={name} onChange={(e) => setName(e.target.value)}/>
             <img src={process.env.NEXT_PUBLIC_API_URL +"/" +props.item.logo} className=" aspect-square mx-10 max-w-10 p-1" alt="logo" />
             <input type="file" name="file" placeholder="asd" className="my-auto hover:file:bg-black file:duration-100 hover:file:text-white file:py-2 file:bg-white file:border file:rounded " ref={fileInput} />
-            <button className="border border-2 border-black hover:text-white hover:bg-black px-2 duration-100 rounded" onClick={() => updateTeam(props.item.id, name, fileInput)}>Изменить</button>
-            <button className="border border-2 border-black hover:text-white hover:bg-black duration-100 rounded w-10" onClick={() => deleteTeam(props.item.id)}>X</button>
+            <button className="border border-2 border-black hover:text-white hover:bg-black px-2 duration-100 rounded" onClick={() => {
+                updateTeam(props.item.id, name, fileInput)
+                queryClient.invalidateQueries({queryKey: ["teams"]})
+            }}>Изменить</button>
+            <button className="border border-2 border-black hover:text-white hover:bg-black duration-100 rounded w-10" onClick={() => {
+                deleteTeam(props.item.id)
+                queryClient.invalidateQueries({queryKey: ["teams"]})
+            }}>X</button>
         </div>
     )
 }
@@ -103,6 +111,7 @@ function Team(props: any){
 
 
 export default function Edit_teams() {
+
     const {data: teams, status} = useQuery({
         queryKey: ['teams'],
         queryFn: getTeams

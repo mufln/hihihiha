@@ -1,6 +1,6 @@
 ﻿// 'use client'
 import React, {useState} from "react";
-import {QueryClient, useQuery} from "@tanstack/react-query";
+import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 
 
 const queryClient = new QueryClient();
@@ -38,7 +38,6 @@ async function addPlayer(id: number, name: string, bio: string, joined: string, 
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(body)
     })
-    await queryClient.invalidateQueries({queryKey: ["getTeam"]})
     return response.json();
 }
 
@@ -54,6 +53,7 @@ function AddPlayer(props: {player: any, editing_existing: boolean }) {
     let id = player ? player.id : null
     // console.log(joined)
     const fileInput = React.useRef<HTMLInputElement>(null);
+    const queryClient = useQueryClient();
     return (
         <div className="flex flex-wrap bg-white my-2 border-2 border p-2 rounded-lg gap-2">
             <input className="border rounded px-2"  defaultValue={player ? player.name: ""} onChange={(e) => setName(e.target.value)}/>
@@ -64,11 +64,20 @@ function AddPlayer(props: {player: any, editing_existing: boolean }) {
             <input type="datetime-local" className="border rounded px-2 w-full" defaultValue={player ? player.left_at: new Date()} onChange={(e) => setLeft(e.target.value)} placeholder="Дата выхода"/>
             <input type="text" className="border rounded px-2 w-full" defaultValue={player ? player.role : ""} onChange={(e) => setRole(e.target.value)} placeholder="Роль"/>
             {!editing_existing && <button className="border border-2 mr-0 border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
-                     onClick={() => addPlayer(null, name, bio, joined, role, left, fileInput)}>Добавить игрока</button>}
+                     onClick={() => {
+                         addPlayer(null, name, bio, joined, role, left, fileInput)
+                         queryClient.invalidateQueries({queryKey: ["team"]})
+                     }}>Добавить игрока</button>}
             {editing_existing && <><button className="border border-2 border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
-                     onClick={() => addPlayer(id, name, bio, joined, role, left, fileInput)}>Изменить игрока</button>
+                     onClick={() => {
+                         addPlayer(id, name, bio, joined, role, left, fileInput)
+                         queryClient.invalidateQueries({queryKey: ["team"]})
+                     }}>Изменить игрока</button>
             <button className="border border-2 border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
-                    onClick={() => deletePlayer(player.id)}>X</button></>}
+                    onClick={() => {
+                        deletePlayer(player.id)
+                        queryClient.invalidateQueries({queryKey: ["team"]})
+                    }}>X</button></>}
         </div>
     )
 }
@@ -78,7 +87,6 @@ async function deletePlayer(id: number) {
         method: "DELETE",
         credentials: "include"
     })
-    await queryClient.invalidateQueries({queryKey: ["getTeam"]})
     return response.json();
 }
 
