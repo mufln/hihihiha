@@ -1,8 +1,8 @@
-﻿import {useQuery} from "@tanstack/react-query";
+﻿import {QueryClient, useQuery} from "@tanstack/react-query";
 import React, {useState} from "react";
 import {json} from "stream/consumers";
 
-
+const queryClient = new QueryClient();
 async function getTeams() {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/teams/', {
         method: "GET"
@@ -23,13 +23,14 @@ async function addTeam(name: string, logo_ref: any ) {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/teams/', {
         method: "POST",
         credentials: "include",
-        // headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(
             {
                 "name": name,
                 "logo_id": logo_response.id
             })
     })
+    await queryClient.invalidateQueries({queryKey: ["teams"]})
     return response.json();
 }
 
@@ -37,7 +38,7 @@ async function addTeam(name: string, logo_ref: any ) {
 async function updateTeam(id: number, name: string, logo_ref: any) {
     let body = {"name": name}
     console.log(logo_ref.current.value)
-    if( typeof logo_ref.current.value !== "undefined"){
+    if( logo_ref.current.value !== ""){
         let fd = new FormData();
         fd.append("file", logo_ref.current.files[0]);
         let logo_response = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/resources/', {
@@ -55,6 +56,7 @@ async function updateTeam(id: number, name: string, logo_ref: any) {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(body)
     })
+    await queryClient.invalidateQueries({queryKey: ["teams"]})
 }
 
 
@@ -63,7 +65,9 @@ async function deleteTeam(id: number) {
         method: "DELETE",
         credentials: "include"
     })
+    await queryClient.invalidateQueries({queryKey: ["teams"]})
     return response.json();
+
 }
 
 
@@ -89,7 +93,7 @@ function Team(props: any){
         <div key={props.item.id} className="flex my-2 bg-white border-2 border p-2 rounded-lg justify-between">
             <input className="m-2" defaultValue={name} onChange={(e) => setName(e.target.value)}/>
             <img src={process.env.NEXT_PUBLIC_API_URL +"/" +props.item.logo} className=" aspect-square mx-10 max-w-10 p-1" alt="logo" />
-            <input type="file" name="file" className="my-auto hover:file:bg-black file:duration-100 hover:file:text-white file:py-2 file:bg-white file:border file:rounded " ref={fileInput} />
+            <input type="file" name="file" placeholder="asd" className="my-auto hover:file:bg-black file:duration-100 hover:file:text-white file:py-2 file:bg-white file:border file:rounded " ref={fileInput} />
             <button className="border border-2 border-black hover:text-white hover:bg-black px-2 duration-100 rounded" onClick={() => updateTeam(props.item.id, name, fileInput)}>Изменить</button>
             <button className="border border-2 border-black hover:text-white hover:bg-black duration-100 rounded w-10" onClick={() => deleteTeam(props.item.id)}>X</button>
         </div>
@@ -105,8 +109,7 @@ export default function Edit_teams() {
     })
     console.log(teams)
     return (
-
-        <div className = 'text-black'>
+        <div className = 'text-black bg-white w-full gap-4'>
 
             <h1 className="text-2xl font-bold text-black">Команды</h1>
             <AddTeam/>

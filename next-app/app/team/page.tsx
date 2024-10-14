@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 
 
 let getTeam = async () => {
-    let response = await fetch(process.env.NEXT_PUBLIC_API_URL+ '/team', {
+    let response = await fetch(process.env.NEXT_PUBLIC_API_URL+ '/team/', {
         method: "GET",
         credentials: "include"
     })
@@ -69,7 +69,7 @@ export default function Component() {
                     <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
                 {status === 'success' && (
                 data.map((item) => (
-                    <div className='preview duration-300 lg:w-96 w-80' key={item.id}
+                    <div className='preview duration-300 lg:w-96 w-80 hover:' key={item.id}
                          onClick={() => {
                             router.push("/team/player?id="+item.id)
                          }}
