@@ -103,7 +103,7 @@ export default function GameInfo() {
                         <Badge variant="secondary" className='border-none bg-[#E02A26] text-white text-xl MuseoBoldItalic px-2 py-1 rounded-3xl max-w-max'>{gameData.teamA.n}</Badge>
                        <div className='overflow-x-hidden h-30'>
                            {gameData.teamA.players.map((item, index) => (
-                               <div className='flex justify-between border-b-2'>
+                               <div className='flex justify-between border-b-2' key={index}>
                                 <p className='text-xl text-center mb-0 mt-4 whitespace-nowrap mr-4 max-w-[50%] text-ellipsis overflow-hidden'>
                                     {item.name}</p>
                                 <p className='text-xl text-center mb-0 mt-4'>{item.role}</p>
@@ -115,7 +115,7 @@ export default function GameInfo() {
                         <Badge variant="secondary" className='border-none bg-[#26E065] text-xl MuseoBoldItalic px-2 py-1 rounded-3xl max-w-max'>{gameData.teamB.n}</Badge>
                        <div className='overflow-x-hidden h-30'>
                            {gameData.teamB.players.map((item, index) => (
-                               <div className='flex justify-between border-b-2'>
+                               <div className='flex justify-between border-b-2' key={index}>
                                        <p className='text-xl text-center mb-0 mt-4 whitespace-nowrap mr-4 max-w-[50%] text-ellipsis overflow-hidden'>
                                         {item.name}</p>
                                        <p className='text-xl text-center mb-0 mt-4'>{item.role}</p>
