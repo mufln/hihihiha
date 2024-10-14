@@ -94,7 +94,7 @@ export default function Player() {
                     <TableHeader className="">
                         <TableRow className="">
                             {["", "", "И", "Г", "ПАС.", "ЖК", "КК"].map((item, index) => (
-                                <TableHead key={index} className="p-4 text-center border-2 border-black">
+                                <TableHead key={index} className="p-4 text-center MuseoBold border-2 border-black">
                                     {item}
                                 </TableHead>
                             ))}
@@ -104,7 +104,7 @@ export default function Player() {
                         {tableData.map((row, rowIndex) => (
                             <TableRow key={rowIndex}>
                                 {row.map((cell, cellIndex) => (
-                                    <TableCell key={cellIndex} className="text-center border-2 border-black">
+                                    <TableCell key={cellIndex} className="text-center font-normal text-black border-2 border-black">
                                         {cell}
                                     </TableCell>
                                 ))}
