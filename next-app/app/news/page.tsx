@@ -4,7 +4,7 @@ import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components
 import {Button} from "@/components/ui/button"
 import NewsTitle from '@/components/titles/news'
 import {useRouter} from 'next/navigation'
-import {QueryClient, useQuery} from "@tanstack/react-query";
+import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 // import { it } from 'node:test'
 
 const items = [
@@ -41,8 +41,6 @@ const items = [
 ]
 
 
-const queryClient = new QueryClient();
-
 
 async function getNews() {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/posts/', {
@@ -56,6 +54,7 @@ async function getNews() {
 }
 
 export default function CardWithBackground() {
+    const queryClient = useQueryClient();
     const {status, data} = useQuery({
         queryKey: ['news'],
         queryFn: getNews

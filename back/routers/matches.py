@@ -33,12 +33,14 @@ async def create_match(
         db: Annotated[psycopg.Connection, Depends(get_db)],
 ):
     match_id = db.execute(
-        "INSERT INTO matches (op1_id, op2_id, op1_score, op2_score, math_date, created_at) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id", (
+        "INSERT INTO matches (op1_id, op2_id, op1_score, op2_score, math_date, location, tour, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (
             match.op1_id,
             match.op2_id,
             match.op1_score,
             match.op2_score,
-            match.match_date,
+            match.math_date,
+            match.location,
+            match.tour,
             datetime.datetime.now(datetime.UTC),
         )).fetchone()["id"]
     db.commit()
@@ -64,6 +66,10 @@ async def update_match(
         db.execute("UPDATE matches SET op2_score = %s WHERE id = %s", (request.op2_score, id))
     if request.math_date:
         db.execute("UPDATE matches SET math_date = %s WHERE id = %s", (request.math_date, id))
+    if request.location:
+        db.execute("UPDATE matches SET location = %s WHERE id = %s", (request.location, id))
+    if request.tour:
+        db.execute("UPDATE matches SET tour = %s WHERE id = %s", (request.tour, id))
     if not request.is_finished is None:
         db.execute("UPDATE matches SET is_finished = %s WHERE id = %s", (request.is_finished, id))
     db.commit()

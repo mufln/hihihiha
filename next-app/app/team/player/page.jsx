@@ -10,7 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table.tsx"
 import StatTitle from "@/components/titles/statistics"
-import {QueryClient, useQuery} from "@tanstack/react-query";
+import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useSearchParams} from "next/navigation";
 
 
@@ -26,9 +26,6 @@ const items = [
     {id: 5, title: "КК", value: 1},
 ]
 
-
-const queryClient = new QueryClient();
-
 async function getPlayer(id) {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/team/' + id, {
         method: "GET"
@@ -39,6 +36,7 @@ async function getPlayer(id) {
 
 
 export default function Player() {
+    const queryClient = useQueryClient();
     const searchParams = useSearchParams()
     const id = searchParams.get('id')
     let {data, status} = useQuery({

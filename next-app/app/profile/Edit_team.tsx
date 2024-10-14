@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 
 
-const queryClient = new QueryClient();
 async function addPlayer(id: number, name: string, bio: string, joined: string, role: string, left: string, logo_ref: any) {
     let fd = new FormData();
     let body = {
@@ -100,6 +99,7 @@ async function getTeam() {
 }
 
 export default function Edit_team() {
+    const queryClient = useQueryClient();
     const {status, data} = useQuery({
         queryKey: ['team'],
         queryFn: getTeam

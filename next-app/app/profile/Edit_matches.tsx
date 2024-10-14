@@ -7,8 +7,6 @@ import {Select, SelectItem} from "@nextui-org/select";
 import {boolean} from "property-information/lib/util/types";
 // import {Select, SelectItem} from "@nextui-org/select";
 
-let queryClient = new QueryClient();
-
 async function getMatches() {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches/', {
         method: "GET",
@@ -25,8 +23,10 @@ async function addMatch(props: any) {
         "op2_id": Number(props.p2),
         "op1_score": Number(props.score1),
         "op2_score": Number(props.score2),
-        "match_date": props.date,
-        "is_finished": props.is_finished
+        "math_date": props.date,
+        "is_finished": props.is_finished,
+        "location": props.location,
+        "tour": props.tour
     }
     console.log(body)
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches/', {
@@ -61,7 +61,9 @@ async function updateMatch(props: any) {
         "op1_score": Number(props.score1),
         "op2_score": Number(props.score2),
         "math_date": props.date,
-        "is_finished": props.is_finished
+        "is_finished": props.is_finished,
+        "location": props.location,
+        "tour": props.tour
     }
     console.log(body)
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches/' + props.id, {
@@ -85,41 +87,45 @@ function AddMatch(props: {teams: any, editing_existing: boolean, match:any}) {
     const [score1, setScore1] = useState(match ? match.op1_score : 0)
     const [score2, setScore2] = useState(match ? match.op2_score : 0)
     const [is_finished, setIsFinished] = useState(match ? match.is_finished : false)
-    const [date, setDate] = useState(match ? match.math_date : new Date())
-
+    const [date, setDate] = useState(match ? new Date(match.math_date) : new Date())
+    const [location, setLocation] = useState(match ? match.location : '')
+    const [tour, setTour] = useState(match ? match.tour : "1/2")
     useEffect(() => {
         console.log(p1)
         console.log(p2)
     }, [p1, p2])
     return (
     <div className="flex-wrap flex w-full gap-2 border rounded-lg p-2">
-        <select className="p-2 border border-black  rounded-lg" defaultValue={match ? match.op1_id : 0} onChange={(e) => setP1(e.target.value)}>
+        <select className="p-2 border border-black  rounded-lg" defaultValue={p1} onChange={(e) => setP1(e.target.value)}>
             {teams.map((team: any) => <option key={team.id} value={team.id}>{team.name}</option>) }
         </select>
-        <input type="number" onChange={(e) => setScore1(e.target.value)} defaultValue={match ? match.op1_score : 0} className="p-1 max-w-16 border border-black rounded-lg" placeholder="Счет"/>
+        <input type="number" onChange={(e) => setScore1(e.target.value)} defaultValue={score1} className="p-1 max-w-16 border border-black rounded-lg" placeholder="Счет"/>
         <div className="my-auto font-bold">:</div>
-        <input type="number" onChange={(e) => setScore2(e.target.value)} defaultValue={match ? match.op2_score : 0} className="p-1 truncate max-w-16 border border-black  rounded-lg" placeholder="Счет"/>
-        <select className="p-2 border border-black  rounded-lg" onChange={(e) => setP2(e.target.value)} defaultValue={match ? match.op2_id : 0}>
+        <input type="number" onChange={(e) => setScore2(e.target.value)} defaultValue={score2} className="p-1 truncate max-w-16 border border-black  rounded-lg" placeholder="Счет"/>
+        <select className="p-2 border border-black  rounded-lg" onChange={(e) => setP2(e.target.value)} defaultValue={p2}>
             {teams.map((team: any) => <option key={team.id} value={team.id}>{team.name}</option>) }
         </select>
-        <input type="datetime-local" onChange={(e) => setDate(e.target.value)} defaultValue={match ? match.math_date : new Date()} className="p-2 max-w-52 border border-black  rounded-lg" placeholder="Дата"/>
+        <input type="datetime-local" onChange={(e) => setDate(e.target.value)} defaultValue={match ? date : new Date()} className="p-2 max-w-52 border border-black  rounded-lg" placeholder="Дата"/>
+        <input type="text" className="p-2 ml-2 border border-black  rounded-lg" placeholder="Место" defaultValue={location} onChange={(e) => setLocation(e.target.value)}/>
+        <input type="text" className="p-2 ml-2 border border-black  rounded-lg" placeholder="Тур" defaultValue={tour} onChange={(e) => setTour(e.target.value)}/>
         <div className="flex flex-row border  border-black px-2 rounded-lg">
         <div className="my-auto">Завершен?</div>
-        <input type="checkbox" className="p-2 ml-2 border border-black  rounded-lg" checked={is_finished} onChange={(e) => setIsFinished(e.target.checked)} placeholder="Завершен"/>
+        <input type="checkbox" className="p-2 ml-2 border border-black  rounded-lg" defaultChecked={false} onChange={(e) => setIsFinished(e.target.checked)} placeholder="Завершен"/>
+
         </div>
         {!editing_existing && (<button onClick={() => {
-            addMatch({p1, p2, score1, score2, date, is_finished})
+            addMatch({p1, p2, score1, score2, date, is_finished, location, tour})
             queryClient.invalidateQueries({queryKey: ["matches"]})
         }} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Добавить матч</button>)}
         {editing_existing &&
             <>
             <button onClick={() => {
-                updateMatch({id, p1, p2, score1, score2, date, is_finished})
+                updateMatch({id, p1, p2, score1, score2, date, is_finished, location, tour})
                 queryClient.invalidateQueries({queryKey: ["matches"]})
             }} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Изменить матч</button>
             <button onClick={() => {
                 deleteMatch(id)
-                queryClient.invalidateQueries({queryKey: ["matchescd "]})
+                queryClient.invalidateQueries({queryKey: ["matches"]})
             }} className="border border-2 border-black hover:text-white mr-0 hover:bg-black duration-100 rounded w-10">X</button>
             </>
         }
@@ -136,7 +142,7 @@ export default function Edit_matches() {
         queryFn: getTeams
     })
     return (
-        <div className="bg-white w-full gap-4 text-black">
+        <div className="bg-white w-full gap-4 text-black flex flex-wrap gap-2">
             <h1 className="text-2xl font-bold flex flex-row">Матчи</h1>
             {statusTeams === "success" && status === "success" && <AddMatch teams={teams} editing_existing={false} match={null}/> }
             {status === 'error' && <p>{status}</p>}

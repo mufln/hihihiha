@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from db import get_db
 from models import User
-from data_requests import PostCreateRequest
+from data_requests import PostCreateRequest, PostUpdateRequest
 from responses import PostResponse
 from routers import auth
 
@@ -61,7 +61,7 @@ async def create_post(
 @router.post("/{id}")
 async def update_post(
         id: int,
-        post: PostCreateRequest,
+        post: PostUpdateRequest,
         db: Annotated[psycopg.Connection, Depends(get_db)],
 ):
     post_id = db.execute("SELECT id FROM posts WHERE id = %s", (id,)).fetchone()
@@ -80,3 +80,18 @@ async def update_post(
     db.execute("UPDATE posts SET updated_at = %s WHERE id = %s", (datetime.datetime.now(datetime.UTC), id))
     db.commit()
     return {"message": "Post updated"}
+
+@router.delete("/{id}")
+async def delete_post(
+        id: int,
+        db: Annotated[psycopg.Connection, Depends(get_db)],
+        _admin: Annotated[User, Depends(auth.get_admin)],
+):
+    post_id = db.execute("SELECT id FROM posts WHERE id = %s", (id,)).fetchone()
+    if not post_id:
+        raise HTTPException(status_code=404, detail="Post not found")
+
+    db.execute("DELETE FROM post_resources WHERE post_id = %s", (id,))
+    db.execute("DELETE FROM posts WHERE id = %s", (id,))
+    db.commit()
+    return {"message": "Post deleted"}

@@ -7,14 +7,12 @@ from models import DbModel
 
 
 class PostCreateRequest(DbModel):
-    __tablename__ = "posts"
     title: str
     text_md: str
     media: list[int]
 
 
 class ResourceCreateRequest(DbModel):
-    __tablename__ = "resources"
     filename: str
 
 
@@ -85,9 +83,11 @@ class StatsUpdateRequest(BaseModel):
 class MatchCreateRequest(BaseModel):
     op1_id: int
     op2_id: int
-    op1_score: int | None = None
-    op2_score: int | None = None
-    match_date: datetime
+    op1_score: int | None = 0
+    op2_score: int | None = 0
+    location: str
+    tour: str
+    math_date: datetime
     is_finished: bool
 
 class MatchUpdateRequest(BaseModel):
@@ -95,6 +95,8 @@ class MatchUpdateRequest(BaseModel):
     op2_id: int | None = None
     op1_score: int | None = None
     op2_score: int | None = None
+    location: str| None = None
+    tour: str | None =None
     math_date: datetime | None = None
     is_finished: bool | None = None
 

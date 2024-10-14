@@ -6,7 +6,7 @@ import {Edit3} from "lucide-react"
 import MyGamesTitle from './titles/my-games';
 import MyNewsTitle from './titles/my-news';
 import MyBuysTitle from './titles/my-buys';
-import {QueryClient, QueryClientProvider, useQuery} from "@tanstack/react-query";
+import {QueryClient, QueryClientProvider, useQuery, useQueryClient} from "@tanstack/react-query";
 import button from "next/link";
 import Edit_matches from "./Edit_matches";
 import Edit_news from "./Edit_news";
@@ -15,8 +15,6 @@ import Edit_store from "./Edit_store";
 import Edit_system from "./Edit_system";
 import Edit_teams from "./Edit_teams";
 import Login from "@/app/profile/Login";
-
-const queryClient = new QueryClient();
 
 async function getUser() {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/users/me', {
@@ -27,6 +25,7 @@ async function getUser() {
 }
 
 export default function CardWithBackground() {
+    const queryClient = useQueryClient();
     const userData = {
         id: 1,
         role: "admin",

@@ -4,10 +4,8 @@ import React, {useState} from 'react';
 import TeamTitle from '@/components/titles/team';
 import {useRouter} from "next/navigation";
 import Link from "next/link";
-import {QueryClient, useQuery} from "@tanstack/react-query";
+import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 
-
-const queryClient = new QueryClient();
 
 
 let getTeam = async () => {
@@ -21,6 +19,7 @@ let getTeam = async () => {
 
 
 export default function Component() {
+    const queryClient = useQueryClient();
     const router = useRouter();
     const previewData = [
         {
