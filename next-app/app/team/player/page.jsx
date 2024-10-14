@@ -50,9 +50,10 @@ export default function Player() {
         Array.from({length: 7}, (_, colIndex) => `${rowIndex + 1}-${colIndex + 1}`)
     )
     return (
-        <div className="h-full bg-white lg:flex md:flex lg:flex-wrap md:flex-wrap text-black p-4">
+        <div className="h-full bg-white text-black p-4">
+          <div className=" flex flex-col lg:flex-row">
             <div className="flex flex-col mb-8">
-                <div className="flex-wrap space-x-4">
+                <div className="space-x-4">
                     {status === 'error' && <p>{status}</p>}
                     {status === 'loading' &&
                         <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
@@ -84,9 +85,10 @@ export default function Player() {
             </div>
             <div className=" flex flex-col max-w-max text-gray-500 px-6">
                 <h2 className="text-4xl">Биография</h2>
-                <p className="my-2 max-w-3xl text-justify indent-4">{status === "success" && (data.bio)}</p>
+                <p className="my-2 text-justify indent-4">{status === "success" && (data.bio)}</p>
             </div>
-            <div className="container flex flex-col mx-auto  mt-8">
+            </div>
+            <div className="container flex flex-col max-w-max mt-8">
                 <StatTitle/>
                 <Table className="my-4 rounded-lg overflow-hidden border-2 border-black">
                     <TableHeader className="">
