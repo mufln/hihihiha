@@ -1,0 +1,2 @@
+ALTER TABLE matches ADD COLUMN location TEXT DEFAULT 'luzniki';
+ALTER TABLE matches ADD COLUMN tour TEXT DEFAULT '1/2' ;

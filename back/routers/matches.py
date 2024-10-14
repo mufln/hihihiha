@@ -20,8 +20,6 @@ async def read_matches(
     matches = db.execute("SELECT * FROM matches ORDER BY math_date DESC").fetchall()
     matches = [MatchResponse(**match) for match in matches]
     for match in matches:
-        match.created_at = match.created_at.strftime("%Y %m %d - %H:%M")
-        match.math_date = match.math_date.strftime("%Y %m %d - %H:%M")
         match.op1 = TeamResponse(**db.execute("SELECT * FROM teams WHERE id = %s", (match.op1_id,)).fetchone())
         match.op1.logo = "static/" + db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (match.op1_id,)).fetchone()["filename"]
         match.op2 = TeamResponse(**db.execute("SELECT * FROM teams WHERE id = %s", (match.op2_id,)).fetchone())
@@ -66,6 +64,8 @@ async def update_match(
         db.execute("UPDATE matches SET op2_score = %s WHERE id = %s", (request.op2_score, id))
     if request.math_date:
         db.execute("UPDATE matches SET math_date = %s WHERE id = %s", (request.math_date, id))
+    if not request.is_finished is None:
+        db.execute("UPDATE matches SET is_finished = %s WHERE id = %s", (request.is_finished, id))
     db.commit()
     return {"message": "Match updated"}
 
@@ -78,7 +78,6 @@ async def delete_match(
     match = Match.select().where("id = %s", (id,)).single().on(db)
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
-    db.execute("DELETE FROM team_resources WHERE match_id = %s", (id,))
     db.execute("DELETE FROM matches WHERE id = %s", (id,))
     db.commit()
     return {"message": "Match deleted"}

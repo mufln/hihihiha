@@ -61,8 +61,8 @@ async def create_player(
             player.name,
             player.role,
             player.bio,
-            datetime.datetime.now(datetime.UTC),
-            None,
+            player.joined_at,
+            player.left_at,
         )).fetchone()["id"]
     try:
         for resource_id in player.media:

@@ -50,7 +50,6 @@ class MerchUpdateRequest(BaseModel):
     media: list[int] | None = None
 
 class PlayerCreateRequest(BaseModel):
-    id: int
     name: str
     role: str
     bio: str
@@ -89,6 +88,7 @@ class MatchCreateRequest(BaseModel):
     op1_score: int | None = None
     op2_score: int | None = None
     match_date: datetime
+    is_finished: bool
 
 class MatchUpdateRequest(BaseModel):
     op1_id: int | None = None
@@ -96,10 +96,11 @@ class MatchUpdateRequest(BaseModel):
     op1_score: int | None = None
     op2_score: int | None = None
     math_date: datetime | None = None
+    is_finished: bool | None = None
 
 class TeamCreateRequest(BaseModel):
     name: str
-    logo_id: int | None = None
+    logo_id: int
 
 class TeamUpdateRequest(BaseModel):
     name: str | None = None

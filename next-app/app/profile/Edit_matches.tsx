@@ -119,7 +119,7 @@ function AddMatch(props: {teams: any, editing_existing: boolean, match:any}) {
             }} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Изменить матч</button>
             <button onClick={() => {
                 deleteMatch(id)
-                queryClient.invalidateQueries({queryKey: ["matches"]})
+                queryClient.invalidateQueries({queryKey: ["matchescd "]})
             }} className="border border-2 border-black hover:text-white mr-0 hover:bg-black duration-100 rounded w-10">X</button>
             </>
         }

@@ -1,4 +1,5 @@
 import datetime
+from typing import Literal
 
 from pydantic import BaseModel
 
@@ -9,6 +10,7 @@ class UserResponse(BaseModel):
     username: str
     email: str | None = None
     full_name: str | None = None
+    role: Literal["admin", "user"]
 
 
 class PostResponse(DbModel):
@@ -61,5 +63,7 @@ class MatchResponse(DbModel):
     op2_score: int
     math_date: datetime.datetime
     created_at: datetime.datetime
+    tour: str
+    location: str
     is_finished: bool
 

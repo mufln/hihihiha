@@ -1,0 +1,2 @@
+ALTER TABLE matches DROP COLUMN tour;
+ALTER TABLE matches DROP COLUMN location;
