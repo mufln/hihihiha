@@ -11,8 +11,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { CalendarIcon, MapPinIcon, Clock } from "lucide-react"
 
 export default function DateFilter() {
-  const [startDate, setStartDate] = useState(null)
-  const [endDate, setEndDate] = useState(null)
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined)
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined)
 
   const handleApplyFilter = () => {
     console.log("Filtering from", startDate, "to", endDate)
@@ -20,8 +20,8 @@ export default function DateFilter() {
   }
 
   const handleResetFilter = () => {
-    setStartDate(null)
-    setEndDate(null)
+    setStartDate(undefined)
+    setEndDate(undefined)
     console.log("Filter reset")
     // Here you would typically call a function to reset the filter
     }
