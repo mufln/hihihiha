@@ -12,6 +12,7 @@ import {
 import StatTitle from "@/components/titles/statistics"
 import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useSearchParams} from "next/navigation";
+import {Suspense} from "react";
 
 
 const backgroundImage = 'url(https://avatars.mds.yandex.net/get-shedevrum/5570741/img_b5b38b9886fd11efb424c6eb7d220bbe/orig)'
@@ -35,7 +36,9 @@ async function getPlayer(id) {
 }
 
 
-export default function Player() {
+
+function SuspensePlayer() {
+
     const queryClient = useQueryClient();
     const searchParams = useSearchParams()
     const id = searchParams.get('id')
@@ -49,42 +52,42 @@ export default function Player() {
     )
     return (
         <div className="h-full bg-white text-black p-4">
-          <div className=" flex flex-col lg:flex-row">
-            <div className="flex flex-col mb-8">
-                <div className="space-x-4">
-                    {status === 'error' && <p>{status}</p>}
-                    {status === 'loading' &&
-                        <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
-                    {status === 'success' && (
-                        <div className='preview mb-4 mx-auto'
-                             style={{backgroundImage: "url(" + process.env.NEXT_PUBLIC_API_URL + data.media[0].filename + ")"}}>
-                            <div className="h-full lg:text-lg text-md bg-gradient-to-t from-black/80 from-0% to-30% truncate rounded-lg py-4 duration-300 opacity-100 text-center">
-                            <div className="flex-1">
+            <div className=" flex flex-col lg:flex-row">
+                <div className="flex flex-col mb-8">
+                    <div className="space-x-4">
+                        {status === 'error' && <p>{status}</p>}
+                        {status === 'loading' &&
+                            <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
+                        {status === 'success' && (
+                            <div className='preview mb-4 mx-auto'
+                                 style={{backgroundImage: "url(" + process.env.NEXT_PUBLIC_API_URL + data.media[0].filename + ")"}}>
+                                <div className="h-full lg:text-lg text-md bg-gradient-to-t from-black/80 from-0% to-30% truncate rounded-lg py-4 duration-300 opacity-100 text-center">
+                                    <div className="flex-1">
 
+                                    </div>
+                                </div>
+                            </div>)}
+                        <Active/>
+                        <h2 className="text-4xl">{status === "success" && (data.name)}</h2>
+                        <p className="mt-1 text-xl">{status === "success" && data.role}</p>
+                    </div>
+                    <div className=" flex mt-4 bg-black text-white rounded-2xl p-2 max-w-max">
+                        {items.map((item, index) => (
+                            <div className='col m-1' key={index}>
+                                <div className="text-base text-center m-2">
+                                    {item.title}
+                                </div>
+                                <div className="text-lg font-bold text-center m-2">
+                                    {item.value}
+                                </div>
                             </div>
-                            </div>
-                        </div>)}
-                    <Active/>
-                    <h2 className="text-4xl">{status === "success" && (data.name)}</h2>
-                    <p className="mt-1 text-xl">{status === "success" && data.role}</p>
+                        ))}
+                    </div>
                 </div>
-                <div className=" flex mt-4 bg-black text-white rounded-2xl p-2 max-w-max">
-                    {items.map((item, index) => (
-                        <div className='col m-1' key={index}>
-                            <div className="text-base text-center m-2">
-                                {item.title}
-                            </div>
-                            <div className="text-lg font-bold text-center m-2">
-                                {item.value}
-                            </div>
-                        </div>
-                    ))}
+                <div className=" flex flex-col max-w-max text-gray-500 px-6">
+                    <h2 className="text-4xl">Биография</h2>
+                    <p className="my-2 text-justify indent-4">{status === "success" && (data.bio)}</p>
                 </div>
-            </div>
-            <div className=" flex flex-col max-w-max text-gray-500 px-6">
-                <h2 className="text-4xl">Биография</h2>
-                <p className="my-2 text-justify indent-4">{status === "success" && (data.bio)}</p>
-            </div>
             </div>
             <div className="container flex flex-col max-w-max mt-8">
                 <StatTitle/>
@@ -112,5 +115,12 @@ export default function Player() {
                 </Table>
             </div>
         </div>
+    )
+}
+export default function Player() {
+    return (
+        <Suspense>
+            <SuspensePlayer/>
+        </Suspense>
     )
 }

@@ -10,7 +10,7 @@ async function getTeams() {
     return response.json();
 }
 
-async function addTeam(name: string, logo_ref: any ) {
+async function addTeam(name: string, logo_ref: any, queryClient:any ) {
     let fd = new FormData();
     fd.append("file", logo_ref.current.files[0]);
     // console.log(logo.)
@@ -30,11 +30,12 @@ async function addTeam(name: string, logo_ref: any ) {
                 "logo_id": logo_response.id
             })
     })
+    queryClient.invalidateQueries({queryKey: ["teams"]})
     return await response.json();
 }
 
 
-async function updateTeam(id: number, name: string, logo_ref: any) {
+async function updateTeam(id: number, name: string, logo_ref: any, queryClient:any) {
     let body = {"name": name}
     console.log(logo_ref.current.value)
     if( logo_ref.current.value !== ""){
@@ -46,6 +47,7 @@ async function updateTeam(id: number, name: string, logo_ref: any) {
             credentials: "include"
         })).json()
         console.log(logo_response.id)
+        // @ts-ignore
         body["logo_id"] = logo_response.id
     }
     console.log(body)
@@ -55,14 +57,16 @@ async function updateTeam(id: number, name: string, logo_ref: any) {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(body)
     })
+    queryClient.invalidateQueries({queryKey: ["teams"]})
 }
 
 
-async function deleteTeam(id: number) {
+async function deleteTeam(id: number, queryClient:any) {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/teams/' + id, {
         method: "DELETE",
         credentials: "include"
     })
+    queryClient.invalidateQueries({queryKey: ["teams"]})
     return response.json();
 
 }
@@ -79,8 +83,7 @@ function AddTeam() {
             <input type="file" className="my-auto hover:file:bg-black file:duration-100 hover:file:text-white file:py-2 file:bg-white file:border file:rounded "  name="file" ref={fileInput} />
             {/*<input type="text" value={logo} onChange={(e) => setLogo(e.target.value)} className="w-1/5"/>*/}
             <button className="border border-2 text-sm border-black hover:text-white mr-0 ml-auto hover:bg-black duration-100 rounded w-fit px-2" onClick={() => {
-                addTeam(name, fileInput)
-                queryClient.invalidateQueries({queryKey: ["teams"]})
+                addTeam(name, fileInput, queryClient)
             }}>Добавить команду</button>
         </div>
     )
@@ -97,11 +100,11 @@ function Team(props: any){
             <img src={process.env.NEXT_PUBLIC_API_URL +"/" +props.item.logo} className=" aspect-square mx-10 max-w-10 p-1" alt="logo" />
             <input type="file" name="file" placeholder="asd" className="my-auto hover:file:bg-black file:duration-100 hover:file:text-white file:py-2 file:bg-white file:border file:rounded " ref={fileInput} />
             <button className="border border-2 border-black hover:text-white hover:bg-black px-2 duration-100 rounded" onClick={() => {
-                updateTeam(props.item.id, name, fileInput)
+                updateTeam(props.item.id, name, fileInput, queryClient)
                 queryClient.invalidateQueries({queryKey: ["teams"]})
             }}>Изменить</button>
             <button className="border border-2 border-black hover:text-white hover:bg-black duration-100 rounded w-10" onClick={() => {
-                deleteTeam(props.item.id)
+                deleteTeam(props.item.id, queryClient)
                 queryClient.invalidateQueries({queryKey: ["teams"]})
             }}>X</button>
         </div>

@@ -25,7 +25,7 @@ async def get_merch_items(
                 "filename": "/static/" + item["filename"],
                 "thumbnail": "/static/" + item["thumbnail"],
             } for item in db.execute(
-                "SELECT filename, thumbnail from resources JOIN (SELECT * FROM merch_resources WHERE merch_id = %s) ON resources.id = resource_id",
+                "SELECT filename, thumbnail from resources JOIN (SELECT * FROM merch_resources WHERE merch_id = %s) as a ON resources.id = a.resource_id",
                 (item.id,)).fetchall()
         ]
     return res

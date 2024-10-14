@@ -21,7 +21,7 @@ async def read_posts(
     posts = [PostResponse(**post) for post in posts]
     for post in posts:
         media = db.execute(
-            "SELECT filename, thumbnail from resources JOIN (SELECT * FROM post_resources WHERE post_id = %s) ON resources.id = resource_id",
+            "SELECT filename, thumbnail from resources JOIN (SELECT * FROM post_resources WHERE post_id = %s) as a ON resources.id = a.resource_id",
             (post.id,)).fetchall()
         post.created_at = post.created_at.strftime("%Y %m %d - %H:%M")
         post.media = [
@@ -56,6 +56,21 @@ async def create_post(
         raise HTTPException(status_code=400, detail="Media not found")
     db.commit()
     return
+
+@router.get("/{id}")
+async def get_post(id: int, db: Annotated[psycopg.Connection, Depends(get_db)],):
+    post = db.execute("SELECT * FROM posts where id = %s", (id,)).fetchone()
+
+    if not post:
+        raise HTTPException(status_code=404)
+    res = PostResponse(**post)
+    res.media = [
+        {
+            "filename": "/static/" + item["filename"],
+            "thumbnail": "/static/" + item["thumbnail"],
+        } for item in db.execute(    "SELECT filename, thumbnail from resources JOIN (SELECT * FROM post_resources WHERE post_id = %s) as a ON resources.id = a.resource_id", (id,)).fetchall()
+    ]
+    return res
 
 
 @router.post("/{id}")

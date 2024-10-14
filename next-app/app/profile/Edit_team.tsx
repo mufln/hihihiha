@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 
 
-async function addPlayer(id: number, name: string, bio: string, joined: string, role: string, left: string, logo_ref: any) {
+async function addPlayer(id: number, name: string, bio: string, joined: string, role: string, left: string, logo_ref: any, queryClient: any) {
     let fd = new FormData();
     let body = {
         "name": name,
@@ -12,6 +12,7 @@ async function addPlayer(id: number, name: string, bio: string, joined: string, 
         "role": role,
     }
     if(left !== ""){
+        // @ts-ignore
         body["left_at"] = left
     }
     console.log(typeof logo_ref.current.value)
@@ -24,10 +25,11 @@ async function addPlayer(id: number, name: string, bio: string, joined: string, 
 
         })).json()
         // console.log(logo_response.id)
+        // @ts-ignore
         body["media"] = [logo_response.id]
     }
     let url = process.env.NEXT_PUBLIC_API_URL + '/team/'
-    if(id !== null){
+    if(id !== -1){
         url += + id + "/"
     }
     console.log(body)
@@ -37,6 +39,7 @@ async function addPlayer(id: number, name: string, bio: string, joined: string, 
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(body)
     })
+    queryClient.invalidateQueries({queryKey: ["team"]})
     return response.json();
 }
 
@@ -64,28 +67,29 @@ function AddPlayer(props: {player: any, editing_existing: boolean }) {
             <input type="text" className="border rounded px-2 w-full" defaultValue={player ? player.role : ""} onChange={(e) => setRole(e.target.value)} placeholder="Роль"/>
             {!editing_existing && <button className="border border-2 mr-0 border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
                      onClick={() => {
-                         addPlayer(null, name, bio, joined, role, left, fileInput)
+                         addPlayer(-1, name, bio, joined, role, left, fileInput, queryClient)
                          queryClient.invalidateQueries({queryKey: ["team"]})
                      }}>Добавить игрока</button>}
             {editing_existing && <><button className="border border-2 border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
                      onClick={() => {
-                         addPlayer(id, name, bio, joined, role, left, fileInput)
+                         addPlayer(id, name, bio, joined, role, left, fileInput, queryClient)
                          queryClient.invalidateQueries({queryKey: ["team"]})
                      }}>Изменить игрока</button>
             <button className="border border-2 border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
                     onClick={() => {
-                        deletePlayer(player.id)
-                        queryClient.invalidateQueries({queryKey: ["team"]})
+                        deletePlayer(player.id, queryClient)
+                        console.log('delete')
                     }}>X</button></>}
         </div>
     )
 }
 
-async function deletePlayer(id: number) {
+async function deletePlayer(id: number, queryClient: any) {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/team/' + id + "/", {
         method: "DELETE",
         credentials: "include"
     })
+    queryClient.invalidateQueries({queryKey: ["team"]})
     return response.json();
 }
 
@@ -108,11 +112,11 @@ export default function Edit_team() {
         <div className = 'text-black bg-white w-full gap-4'>
 
             <h1 className="text-2xl font-bold text-black">Команда</h1>
-            <AddPlayer/>
+            <AddPlayer editing_existing={false} player={null}/>
             {status === 'error' && <p>{status}</p>}
             {status === 'pending' &&
                 <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
-            {status === 'success' && (data.map((player) => (
+            {status === 'success' && (data.map((player: any) => (
                 <AddPlayer player={player} editing_existing={true} key={player.id}/>
             )))}
         </div>

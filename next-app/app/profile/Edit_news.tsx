@@ -10,7 +10,7 @@ async function getNews() {
     return response.json();
 }
 
-async function addNews(id, title, text_md, fileInput) {
+async function addNews(id: number, title: string, text_md: string, fileInput: any, queryClient: any) {
     let fd = new FormData();
     let body = {
         "title": title,
@@ -25,11 +25,12 @@ async function addNews(id, title, text_md, fileInput) {
             credentials: "include"
         })).json()
         // console.log(logo_response.id)
+        // @ts-ignore
         body["media"] = [logo_response.id]
     }
     let url = process.env.NEXT_PUBLIC_API_URL + '/posts/'
 
-    if(id !== null){
+    if(id !== -1){
         url += + id + "/"
     }
     console.log(url)
@@ -40,13 +41,15 @@ async function addNews(id, title, text_md, fileInput) {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(body)
     })
+    queryClient.invalidateQueries({queryKey: ["news"]})
     return response.json();
 }
 
-async function deletePost(id) {
+async function deletePost(id: number, queryClient: any) {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/posts/' + id + "/", {
         method: "DELETE"
     })
+    queryClient.invalidateQueries({queryKey: ["news"]})
     return response.json();
 }
 
@@ -68,19 +71,19 @@ function News(props: { post: any }) {
             {post === null &&
                 <button className="border border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
                         onClick={() => {
-                            addNews(null, title, text_md, fileInput)
-                            queryClient.invalidateQueries({queryKey: ["news"]})
+                            addNews(-1, title, text_md, fileInput, queryClient);
+
 
                         }}>Добавить новость</button>}
             {post !== null &&<>
                 <button className="border border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
                         onClick={() => {
-                            addNews(id, title, text_md, fileInput)
+                            addNews(id, title, text_md, fileInput, queryClient)
                             queryClient.invalidateQueries({queryKey: ["news"]})
                         }}>Изменить новость</button>
                 <button className="border border-black hover:text-white hover:bg-black px-2 duration-100 rounded"
                         onClick={() => {
-                            deletePost(id)
+                            deletePost(id, queryClient)
                             queryClient.invalidateQueries({queryKey: ["news"]})
                         }}>X</button></>}
 

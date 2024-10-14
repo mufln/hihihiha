@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.requests import Request
-
+from cfg import *
 from routers import auth, users, posts, resources, merch, team, matches, teams
 
 app = FastAPI(
@@ -37,4 +37,5 @@ app.include_router(teams.router)
 app.mount("/static", StaticFiles(directory="./static"), name="static")
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000)
+    os.system(f"python3 migrate.py 'host={DB_HOST} dbname={DB_NAME} user={DB_USER} password={DB_PASS}' latest")
+    uvicorn.run(app, host="0.0.0.0", port=8000)

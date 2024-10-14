@@ -64,10 +64,10 @@ export default function Component() {
             <TeamTitle/>
             <div className=" my-10 flex-wrap flex mx-auto ">
                 {status === 'error' && <p>{status}</p>}
-                {status === 'loading' &&
+                {status === 'pending' &&
                     <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
                 {status === 'success' && (
-                data.map((item) => (
+                data.map((item: any) => (
                     <div className='preview duration-300 lg:w-96 w-80 hover:' key={item.id}
                          onClick={() => {
                             router.push("/team/player?id="+item.id)

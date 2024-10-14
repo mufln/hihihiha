@@ -20,7 +20,7 @@ async def read_teams(
     teams = db.execute("SELECT * FROM teams ORDER BY created_at DESC").fetchall()
     teams = [TeamResponse(**team) for team in teams]
     for team in teams:
-        team.logo = "static/" + db.execute("SELECT filename from resources join (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (team.id,)).fetchone()["filename"]
+        team.logo = "static/" + db.execute("SELECT filename from resources join (SELECT resource_id FROM team_resources WHERE team_id = %s) as a on resources.id = a.resource_id", (team.id,)).fetchone()["filename"]
     return teams
 
 @router.post("")

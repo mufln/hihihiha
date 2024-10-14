@@ -55,7 +55,7 @@ async function getNews() {
 
 export default function CardWithBackground() {
     const queryClient = useQueryClient();
-    const {status, data} = useQuery({
+    let {status, data} = useQuery({
         queryKey: ['news'],
         queryFn: getNews
     })
@@ -66,11 +66,11 @@ export default function CardWithBackground() {
             <NewsTitle/>
             <div className="flex flex-wrap gap-4 my-10 lg:mx-12 place-content-center ">
                 {status === 'error' && <p>{status}</p>}
-                {status === 'loading' &&
+                {status === 'pending' &&
                     <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
                 {status === 'success' && (
-                    data.map((item) => (
-                        <Card key={item.id}
+                    data.map((item: any) => (
+                        <Card key={item.id} onClick={() => router.push("/news/newspage?id="+item.id)}
                               className=" border bg-white w-full duration-300 lg:max-w-3xl md:max-w-2xl overflow-hidden rounded-md ">
                             <div>
                                 <img

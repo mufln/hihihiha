@@ -1,0 +1,53 @@
+﻿version: '3.8'
+services:
+  db:
+    build: ./db
+    env_file:
+      - ./.env
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    networks:
+      - net
+  back:
+    build: ./back
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+    environment:
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    depends_on:
+      - db
+    networks:
+      - net
+    volumes:
+      - app:/home/node/app/static
+  front:
+    build: ./next-app
+    ports:
+      - 3000:3000
+    env_file:
+      - ./.env
+    environment:
+      - NEXT_PUBLIC_API_URL=back
+    depends_on:
+      - back
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
+  app:
+    driver: local

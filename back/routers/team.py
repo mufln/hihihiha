@@ -26,7 +26,7 @@ async def read_players(
                 "filename": "/static/" + item["filename"],
                 "thumbnail": "/static/" + item["thumbnail"],
             } for item in db.execute(
-                "SELECT filename, thumbnail from resources JOIN (SELECT * FROM player_resources WHERE player_id = %s) ON resources.id = resource_id",
+                "SELECT filename, thumbnail from resources JOIN (SELECT * FROM player_resources WHERE player_id = %s) as a ON resources.id = a.resource_id",
                 (player.id,)).fetchall()
         ]
         res[-1].stats = list(map(lambda x: StatsResponse(**x.model_dump()), Stats.select().where("player_id = %s", (player.id,)).many().on(db)))
@@ -45,7 +45,7 @@ async def read_player( player_id: int,db: Annotated[psycopg.Connection, Depends(
             "filename": "/static/" + item["filename"],
             "thumbnail": "/static/" + item["thumbnail"],
         } for item in db.execute(
-            "SELECT filename, thumbnail from resources JOIN (SELECT * FROM player_resources WHERE player_id = %s) ON resources.id = resource_id",
+            "SELECT filename, thumbnail from resources JOIN (SELECT * FROM player_resources WHERE player_id = %s) as a ON resources.id = a.resource_id",
             (player.id,)).fetchall()
     ]
     return res

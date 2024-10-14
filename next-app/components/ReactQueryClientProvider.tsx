@@ -5,5 +5,5 @@ import React from "react";
 const queryClient = new QueryClient();
 export const ReactQueryClientProvider = ({children}: any) => {
 
-    return <QueryClientProvider client = {queryClient} > {children} < /QueryClientProvider>;
+    return <QueryClientProvider client = {queryClient} > {children} </QueryClientProvider>;
 };

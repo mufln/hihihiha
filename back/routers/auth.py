@@ -62,7 +62,7 @@ def hash_password(password: str):
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
                 db: Annotated[psycopg.Connection, Depends(get_db)],
                 response: Response,
-                bearer: bool = True):
+                bearer: bool = False):
     user = User.select().where("username = %s", (form_data.username,)).single().on(db)
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")

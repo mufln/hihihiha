@@ -37,7 +37,7 @@ export default function CardWithBackground() {
         queryFn: () => getUser()
     })
     console.log(data)
-    const [activeComponent, setActiveComponent] = useState<string>('login');
+    const [activeComponent, setActiveComponent] = useState<string>('cart');
 
     const login = () => setActiveComponent('login');
     const showMatches = () => setActiveComponent('edit_matches');
@@ -59,7 +59,7 @@ export default function CardWithBackground() {
                     </div>
                 </div>
                 <div className=" gap-2 flex flex-wrap text-xl">
-                    {status === 'error' && <p>{status}</p>}
+
                     {status === 'pending' &&
                         <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
                     {(status === 'success' && data.role === "admin") && (
@@ -85,6 +85,7 @@ export default function CardWithBackground() {
                 </div>
             </div>
             <section className="w-4/5">
+                {status === 'success' && data.detail === "Invalid authentication credentials" && <Login/>}
                 {activeComponent === 'login' && <Login/>}
                 {activeComponent === 'edit_matches' && <Edit_matches/>}
                 {activeComponent === 'edit_teams' && <Edit_teams/>}

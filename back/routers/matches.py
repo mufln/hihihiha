@@ -21,9 +21,9 @@ async def read_matches(
     matches = [MatchResponse(**match) for match in matches]
     for match in matches:
         match.op1 = TeamResponse(**db.execute("SELECT * FROM teams WHERE id = %s", (match.op1_id,)).fetchone())
-        match.op1.logo = "static/" + db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (match.op1_id,)).fetchone()["filename"]
+        match.op1.logo = "static/" + db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) as a on resources.id = a.resource_id", (match.op1_id,)).fetchone()["filename"]
         match.op2 = TeamResponse(**db.execute("SELECT * FROM teams WHERE id = %s", (match.op2_id,)).fetchone())
-        match.op2.logo = "static/" + db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) on resources.id = resource_id", (match.op2_id,)).fetchone()["filename"]
+        match.op2.logo = "static/" + db.execute("SELECT filename from resources JOIN (SELECT resource_id FROM team_resources WHERE team_id = %s) as a on resources.id = a.resource_id", (match.op2_id,)).fetchone()["filename"]
     return matches
 
 @router.post("")
@@ -33,7 +33,7 @@ async def create_match(
         db: Annotated[psycopg.Connection, Depends(get_db)],
 ):
     match_id = db.execute(
-        "INSERT INTO matches (op1_id, op2_id, op1_score, op2_score, math_date, location, tour, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (
+        "INSERT INTO matches (op1_id, op2_id, op1_score, op2_score, math_date, location, tour, is_finished, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id", (
             match.op1_id,
             match.op2_id,
             match.op1_score,
@@ -41,6 +41,7 @@ async def create_match(
             match.math_date,
             match.location,
             match.tour,
+            match.is_finished,
             datetime.datetime.now(datetime.UTC),
         )).fetchone()["id"]
     db.commit()

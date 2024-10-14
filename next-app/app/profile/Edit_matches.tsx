@@ -35,6 +35,7 @@ async function addMatch(props: any) {
         credentials: "include",
         body: JSON.stringify(body)
     })
+    props.queryClient.invalidateQueries({queryKey: ["matches"]})
     return response.json();
 }
 
@@ -46,11 +47,12 @@ async function getTeams() {
     return response.json();
 }
 
-async function deleteMatch(id: number) {
+async function deleteMatch(id: number, queryClient: any) {
     let response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/matches/' + id, {
         method: "DELETE",
         credentials:"include"
     })
+    queryClient.invalidateQueries({queryKey: ["matches"]})
     return response.json();
 }
 
@@ -72,6 +74,7 @@ async function updateMatch(props: any) {
         credentials: "include",
         body: JSON.stringify(body)
     })
+    props.queryClient.invalidateQueries({queryKey: ["matches"]})
     return response.json();
 }
 
@@ -82,12 +85,12 @@ function AddMatch(props: {teams: any, editing_existing: boolean, match:any}) {
     let id = match ? match.id : null
     console.log(match)
     let editing_existing = props.editing_existing
-    const  [p1, setP1] = useState(match ? match.op1_id : teams[0].id)
-    const  [p2, setP2] = useState(match ? match.op2_id : teams[0].id)
+    const  [p1, setP1] = useState(match ? match.op1_id : null)
+    const  [p2, setP2] = useState(match ? match.op2_id : null)
     const [score1, setScore1] = useState(match ? match.op1_score : 0)
     const [score2, setScore2] = useState(match ? match.op2_score : 0)
     const [is_finished, setIsFinished] = useState(match ? match.is_finished : false)
-    const [date, setDate] = useState(match ? new Date(match.math_date) : new Date())
+    const [date, setDate] = useState(match ? match.math_date : new Date())
     const [location, setLocation] = useState(match ? match.location : '')
     const [tour, setTour] = useState(match ? match.tour : "1/2")
     useEffect(() => {
@@ -105,27 +108,26 @@ function AddMatch(props: {teams: any, editing_existing: boolean, match:any}) {
         <select className="p-2 border border-black  rounded-lg" onChange={(e) => setP2(e.target.value)} defaultValue={p2}>
             {teams.map((team: any) => <option key={team.id} value={team.id}>{team.name}</option>) }
         </select>
-        <input type="datetime-local" onChange={(e) => setDate(e.target.value)} defaultValue={match ? date : new Date()} className="p-2 max-w-52 border border-black  rounded-lg" placeholder="Дата"/>
+        <input type="datetime-local" onChange={(e) => setDate(e.target.value)} defaultValue={date} className="p-2 max-w-52 border border-black  rounded-lg" placeholder="Дата"/>
         <input type="text" className="p-2 ml-2 border border-black  rounded-lg" placeholder="Место" defaultValue={location} onChange={(e) => setLocation(e.target.value)}/>
         <input type="text" className="p-2 ml-2 border border-black  rounded-lg" placeholder="Тур" defaultValue={tour} onChange={(e) => setTour(e.target.value)}/>
         <div className="flex flex-row border  border-black px-2 rounded-lg">
         <div className="my-auto">Завершен?</div>
-        <input type="checkbox" className="p-2 ml-2 border border-black  rounded-lg" defaultChecked={false} onChange={(e) => setIsFinished(e.target.checked)} placeholder="Завершен"/>
-
+        <input type="checkbox" className="p-2 ml-2 border border-black  rounded-lg" defaultChecked={is_finished} onChange={() => setIsFinished(!is_finished)}/>
         </div>
         {!editing_existing && (<button onClick={() => {
-            addMatch({p1, p2, score1, score2, date, is_finished, location, tour})
+            addMatch({p1, p2, score1, score2, date, is_finished, location, tour, queryClient})
             queryClient.invalidateQueries({queryKey: ["matches"]})
         }} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Добавить матч</button>)}
         {editing_existing &&
             <>
             <button onClick={() => {
-                updateMatch({id, p1, p2, score1, score2, date, is_finished, location, tour})
+                updateMatch({id, p1, p2, score1, score2, date, is_finished, location, tour, queryClient})
                 queryClient.invalidateQueries({queryKey: ["matches"]})
             }} className="mr-0 ml-auto border-2 border border-black text-sm hover:text-white hover:bg-black duration-100 p-2 rounded-lg">Изменить матч</button>
             <button onClick={() => {
-                deleteMatch(id)
-                queryClient.invalidateQueries({queryKey: ["matches"]})
+                deleteMatch(id, queryClient)
+
             }} className="border border-2 border-black hover:text-white mr-0 hover:bg-black duration-100 rounded w-10">X</button>
             </>
         }
@@ -150,7 +152,7 @@ export default function Edit_matches() {
                 <p style={{margin: "auto", display: "block", width: "max-content"}}>{status}</p>}
             {statusTeams === "success" && status === "success" && (
                 data.map((item: any) => (
-                    <AddMatch teams={teams} editing_existing={true} match={item}/>
+                    <AddMatch teams={teams} editing_existing={true} key={item.id} match={item}/>
                 )))}
         </div>
     )
