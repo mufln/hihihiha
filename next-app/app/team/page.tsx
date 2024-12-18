@@ -3,7 +3,6 @@ import "../../styles/tbody.css";
 import React, {useState} from 'react';
 import TeamTitle from '@/components/titles/team';
 import {useRouter} from "next/navigation";
-import Link from "next/link";
 import {QueryClient, useQuery} from "@tanstack/react-query";
 
 

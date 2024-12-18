@@ -70,6 +70,7 @@ export default function Home() {
               <Card 
                 key={item.id} 
                 className={`flex-shrink-0 w-full snap-center`}
+                
               >
                 <CardContent className="p-0">
                   <img 
